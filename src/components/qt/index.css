@@ -1,0 +1,28 @@
+/*------------------------------------------------------------------
+    QT
+-------------------------------------------------------------------*/
+
+
+.qt-background {
+    background: url(https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTzhjEddU4Df1oxOwzOHG6QLp_WcVc24A4UdKoFfYpHMYje0IIH) no-repeat;
+    background-size: cover;
+    padding: 100px 0;
+    background-attachment: fixed;
+    background-position: center center;
+    position: relative;
+}
+
+.qt-background p {
+    font-size: 35px;
+    font-weight: 300;
+    line-height: 44px;
+    color: #fff;
+    font-family: 'Arbutus Slab', serif;
+    margin-bottom: 20px;
+}
+
+.qt-background span {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+}

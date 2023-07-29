@@ -1,0 +1,52 @@
+/*------------------------------------------------------------------
+    About
+-------------------------------------------------------------------*/
+
+.about-section-box {
+    padding: 70px 0px;
+}
+
+.about-section-box .img-fluid {
+    box-shadow: -10px -10px 0px #d0a772;
+}
+
+.reservation {
+    color: #cfa671;
+    border: 2px solid #d0a772;
+    padding: 10px 10px 10px 10px;
+    text-transform: uppercase;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.reservation:hover {
+    color: #FFF;
+    background-color: #d0a772;
+}
+
+.inner-column h1 {
+    font-family: 'Arbutus Slab', serif;
+    font-size: 30px;
+    color: #010101;
+}
+
+.inner-column h1 span {
+    color: #d0a772;
+}
+
+.inner-column h4 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.inner-column p {
+    font-size: 18px;
+}
+
+.inner-column .btn-outline-new-white {
+    color: #d0a772;
+}
+
+.inner-column .btn-outline-new-white:hover {
+    color: #ffffff;
+}
