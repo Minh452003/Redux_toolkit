@@ -3,16 +3,15 @@ import App from './App.tsx'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import { Provider } from 'react-redux'
-import store from './store/index.ts';
+import persistor, { store } from './store/index.ts';
+import { PersistGate } from 'redux-persist/integration/react';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  // <ProductProvider>
-  //   <CountProvider>
-  //     <App />
-  //   </CountProvider>
-  // </ProductProvider>
+
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>
 
 

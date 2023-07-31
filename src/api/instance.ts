@@ -2,14 +2,15 @@ import axios from 'axios'
 
 export const instance = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
-
-    // baseURL: "http://localhost:3000"
-
 });
 
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
-    // Do something before request is sent
+    // const accessToken: string | null = JSON.parse(localStorage.getItem('accessToken') || 'null');
+    // // Nếu có token, thêm vào header của request
+    // if (accessToken) {
+    //     config.headers['Authorization'] = `Bearer ${accessToken}`;
+    // }
     return config;
 }, function (error) {
     // Do something with request error

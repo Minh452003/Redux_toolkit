@@ -65,9 +65,7 @@ export const signIn = async (req, res) => {
         }
         const token = jwt.sign({ id: user._id }, "minh", { expiresIn: "1d" });
         return res.status(200).json({
-            message: "Đăng nhập thành công",
             accessToken: token,
-            user,
         })
     } catch (error) {
     }

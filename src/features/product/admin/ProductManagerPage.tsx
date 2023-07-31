@@ -6,7 +6,7 @@ import Table, { ColumnsType } from "antd/es/table";
 import { useEffect } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { GrEdit, GrFormAdd } from 'react-icons/gr'
+import { GrEdit } from 'react-icons/gr'
 import { getCategories } from "@/api/categoryApi";
 import { ICategory } from "@/interfaces/category";
 
@@ -79,7 +79,7 @@ const ProductManagerPage = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button type="primary"><Link to={`/admin/products/${record.key}/update`}> <GrEdit /></Link></Button>
+                    <Button type="primary" style={{ border: '1px solid blue' }}><Link style={{ color: 'white' }} to={`/admin/products/${record.key}/update`}> <GrEdit /></Link></Button>
                     <Button danger ><AiFillDelete /></Button>
                 </Space>
             ),

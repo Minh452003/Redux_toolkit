@@ -1,10 +1,26 @@
+import { signIn } from '@/api/authApi';
 import './sign.css';
 import { Button, Col, Form, Input, Row, Image } from 'antd';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import { useAppDispatch } from '@/store/hook';
 
 const SignIn = () => {
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const onFinish = async (values: any) => {
+        const response: any = await dispatch(signIn(values));
+        const accessToken: any = response.payload.accessToken
+        localStorage.setItem('accessToken', accessToken);
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Login has been added successfully!',
+            showConfirmButton: false,
+            timer: 1500
+        });
+        navigate("/admin");
+
     };
 
     const onFinishFailed = (errorInfo: any) => {

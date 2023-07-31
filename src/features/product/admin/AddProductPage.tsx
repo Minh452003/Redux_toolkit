@@ -7,8 +7,11 @@ import { Button, Form, Input, Select, Upload, UploadProps, message } from 'antd'
 import TextArea from 'antd/es/input/TextArea';
 import { useEffect } from 'react';
 import { AiOutlineUpload } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 const AddProductPage = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const { categories } = useAppSelector((state: any) => state.categories);
     useEffect(() => {
         dispatch(getCategories());
@@ -25,6 +28,14 @@ const AddProductPage = () => {
                 console.log('Uploaded image successfully!', imageUrl);
                 values.image = imageUrl;
                 dispatch(addProduct(values));
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Product has been added successfully!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate("/admin/products");
             } else {
                 console.error('Error uploading image:', response.payload);
             }
@@ -40,6 +51,8 @@ const AddProductPage = () => {
     const props: UploadProps = {
         name: 'image',
         customRequest: async ({ file }: any) => {
+            console.log(file);
+
         },
         onChange(info) {
             if (info.file.status !== 'uploading') {

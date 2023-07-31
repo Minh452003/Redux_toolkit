@@ -25,21 +25,39 @@ const productSlice = createSlice({
             state.isLoading = false
         })
         // Add
+        builder.addCase(addProduct.pending, (state) => {
+            state.isLoading = true
+        })
         builder.addCase(addProduct.fulfilled, (state: any, action: any) => {
             state.isLoading = false
             state.products.push(action.payload)
         })
+        builder.addCase(addProduct.rejected, (state: any) => {
+            state.isLoading = false
+        })
         // Update
+        builder.addCase(updateProduct.pending, (state) => {
+            state.isLoading = true
+        })
         builder.addCase(updateProduct.fulfilled, (state: any, action: any) => {
             state.isLoading = false
             const product = action.payload
             state.products = state.products.map((item: any) => item.id === product.id ? product : item)
         })
+        builder.addCase(updateProduct.rejected, (state: any) => {
+            state.isLoading = false
+        })
         // Delete
+        builder.addCase(removeProduct.pending, (state) => {
+            state.isLoading = true
+        })
         builder.addCase(removeProduct.fulfilled, (state: any, action: any) => {
             state.isLoading = false
             const id = action.payload
             state.products = state.products.filter((product: any) => product.id != id)
+        })
+        builder.addCase(removeProduct.rejected, (state: any) => {
+            state.isLoading = false
         })
     },
 })

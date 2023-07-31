@@ -1,14 +1,64 @@
+import { signUp } from '@/api/authApi';
 import './sign.css';
-import { Button, Col, Form, Input, Row, Image } from 'antd';
-import { Link } from "react-router-dom";
+import { Button, Col, Form, Input, Row, Image, Upload, UploadProps, message } from 'antd';
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch } from '@/store/hook';
+import { AiOutlineUpload } from 'react-icons/ai';
+import { addImage } from '@/api/uploadApi';
+import Swal from 'sweetalert2';
 const SignUp = () => {
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const onFinish = async (values: any) => {
+        try {
+            // Gọi action addImage để upload ảnh
+            const response: any = await dispatch(addImage(values.image.file.originFileObj));
+            // Kiểm tra xem việc upload ảnh có thành công hay không
+            if (response.meta.requestStatus === 'fulfilled') {
+                // Lấy đường dẫn ảnh sau khi upload thành công từ dữ liệu trả về của action
+                const imageUrl = response.payload.urls[0];
+                console.log('Uploaded image successfully!', imageUrl);
+                values.image = imageUrl;
+                dispatch(signUp(values));
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Register has been added successfully!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate("/signin");
+            } else {
+                console.error('Error uploading image:', response.payload);
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
     };
+
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+
+    const props: UploadProps = {
+        name: 'image',
+        customRequest: async ({ file }: any) => {
+            console.log(file);
+
+        },
+        onChange(info) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                message.success(`${info.file.name} file uploaded successfully`);
+            } else if (info.file.status === 'error') {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+    };
+
     return (
         <div className='sign'>
             <Row>
@@ -57,6 +107,16 @@ const SignUp = () => {
                             rules={[{ required: true, message: 'Confirm password cannot be empty' }, { min: 6, message: 'Confirm password must be at least 6 characters long' }]}
                         >
                             <Input.Password className='input' />
+                        </Form.Item>
+                        <Form.Item
+                            label="Avatar"
+                            name="image"
+                            className='label'
+                            rules={[{ required: true, message: 'Please input your avatar!' }]}
+                        >
+                            <Upload {...props} fileList={[]}>
+                                <Button className='input' icon={<AiOutlineUpload />}>Click to Upload</Button>
+                            </Upload>
                         </Form.Item>
                         <Form.Item >
                             <br />
