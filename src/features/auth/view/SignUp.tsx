@@ -29,34 +29,38 @@ const SignUp = () => {
                         <Form.Item
                             label="Name"
                             name="name"
+                            className='label'
                             rules={[{ required: true, message: 'Name cannot be empty!' }]}
                         >
-                            <Input />
+                            <Input className='input' />
                         </Form.Item>
                         <Form.Item
                             label="Email"
                             name="email"
+                            className='label'
                             rules={[{ required: true, message: 'Email cannot be empty!' }, { type: 'email', message: 'Incorrect email format' }]}
                         >
-                            <Input />
+                            <Input className='input' />
                         </Form.Item>
                         <Form.Item
                             label="Password"
                             name="password"
+                            className='label'
                             rules={[{ required: true, message: 'Password cannot be empty!' }, { min: 6, message: 'Password must be at least 6 characters long' }]}
                         >
-                            <Input.Password />
+                            <Input.Password className='input' />
                         </Form.Item>
                         <Form.Item
                             label="Confirm Password"
                             name="confirmpassword"
+                            className='label'
                             rules={[{ required: true, message: 'Confirm password cannot be empty' }, { min: 6, message: 'Confirm password must be at least 6 characters long' }]}
                         >
-                            <Input.Password />
+                            <Input.Password className='input' />
                         </Form.Item>
                         <Form.Item >
                             <br />
-                            <Button type="primary" htmlType="submit" className='ghost button'>
+                            <Button type="primary" htmlType="submit" className='button'>
                                 SIGN UP
                             </Button>
                         </Form.Item>

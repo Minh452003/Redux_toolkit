@@ -329,12 +329,11 @@ button:focus {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background-color: var(--purple);
-    box-shadow: var(--shadow);
+    background-color: #912a7eaa;
+    box-shadow: 0 5px 10px 5px rgba(0, 0, 0, .3);
     transition: .2s ease;
     cursor: pointer;
     outline: none;
-    background-color: #cfa671;
 }
 
 .check::before {
@@ -342,8 +341,8 @@ button:focus {
     position: absolute;
     font-size: 34px;
     font-weight: 700;
-    color: var(--white);
-    top: 50%;
+    color: #fcf2fa;
+    top: 40%;
     left: 50%;
     transform: rotate(0) translate(-50%, -50%);
 
@@ -359,14 +358,13 @@ button:focus {
 }
 
 .items {
-    /* position: absolute; */
     top: 10px;
     left: 10px;
     width: 25px;
     height: 25px;
     display: grid;
     place-items: center;
-    color: var(--white);
+    color: #fcf2fa;
     font-size: 28px;
     border-radius: 50%;
     opacity: 0;
@@ -387,10 +385,10 @@ button:focus {
 .check:checked~.items {
     top: 0;
     left: 0;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     opacity: 1;
-    box-shadow: var(--shadow);
+    box-shadow: 0 5px 10px 5px rgba(0, 0, 0, .3);
 }
 
 .check:checked~.btn-image {

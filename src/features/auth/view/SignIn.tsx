@@ -14,10 +14,12 @@ const SignIn = () => {
     return (
         <div className='sign'>
             <Row>
-                <Col span={12}><Image
-                    width={'80%'}
-                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                /></Col>
+                <Col span={12} >
+                    <Image
+                        width={'80%'}
+                        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    />
+                </Col>
                 <Col span={11}>
                     <Form
                         layout="vertical"
@@ -31,20 +33,22 @@ const SignIn = () => {
                         <Form.Item
                             label="Email"
                             name="email"
+                            className='label'
                             rules={[{ required: true, message: 'Email cannot be empty!' }, { type: 'email', message: 'Incorrect email format' }]}
                         >
-                            <Input />
+                            <Input className='input' />
                         </Form.Item>
                         <Form.Item
                             label="Password"
                             name="password"
+                            className='label'
                             rules={[{ required: true, message: 'Password cannot be empty!' }, { min: 6, message: 'Password must be at least 6 characters long' }]}
                         >
-                            <Input.Password />
+                            <Input.Password className='input' />
                         </Form.Item>
                         <Form.Item >
                             <br />
-                            <Button type="primary" htmlType="submit" className='ghost button'>
+                            <Button type="primary" htmlType="submit" className='button'>
                                 SIGN IN
                             </Button>
                         </Form.Item>

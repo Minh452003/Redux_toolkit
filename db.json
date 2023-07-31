@@ -1,67 +1,26 @@
 {
-  "cars": [
-    {
-      "id": 1,
-      "name": "Minh",
-      "price": 100
-    },
-    {
-      "id": 2,
-      "name": "Duy",
-      "price": 200
-    },
-    {
-      "id": 3,
-      "name": "Văn",
-      "price": 300
-    },
-    {
-      "name": "Ass1",
-      "price": 2000,
-      "id": 4
-    },
-    {
-      "name": "Sản phẩm 2",
-      "price": "1111",
-      "id": 5
-    },
-    {
-      "name": "Sản phẩm 1",
-      "price": "9999",
-      "id": 6
-    }
-  ],
   "user": [],
   "products": [
     {
       "id": 1,
       "name": "Sản phẩm 1",
-      "price": 100
+      "price": 100,
+      "desc": "Mô tả",
+      "image": "https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg",
+      "reQuantity": 100
     },
     {
       "id": 2,
       "name": "Sản phẩm 2",
-      "price": 200
+      "price": 200,
+      "desc": "Mô tả",
+      "image": "https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg",
+      "reQuantity": 100
     },
     {
-      "id": 3,
-      "name": "Sản phẩm 3",
-      "price": 300
-    },
-    {
-      "name": "Sản phẩm 4",
-      "price": "2000",
-      "id": 4
-    },
-    {
-      "name": "Sản phẩm 5",
-      "price": "2000",
-      "id": 5
-    },
-    {
-      "name": "Sản phẩm 6",
-      "price": "2000",
-      "id": 6
+      "name": "Sản phẩm 7",
+      "price": 200,
+      "id": 3
     }
   ]
 }

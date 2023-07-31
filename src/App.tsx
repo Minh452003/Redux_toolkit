@@ -1,9 +1,14 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import RootLayout from "./components/layouts/rootLayout";
 import './App.css'
 import HomePage from "./features/pages/HomePage";
 import SignIn from "./features/auth/view/SignIn";
 import SignUp from "./features/auth/view/SignUp";
+import AdminLayout from "./components/layouts/adminLayout";
+import DashBoard from "./features/pages/DashBoard";
+import ProductManagerPage from "./features/product/admin/ProductManagerPage";
+import AddProductPage from "./features/product/admin/AddProductPage";
+import UpdateProductPage from "./features/product/admin/UpdateProductPage";
 
 const App = () => {
   return (
@@ -19,12 +24,13 @@ const App = () => {
             <Route path="signin" element={<SignIn />} />
             <Route path="signup" element={<SignUp />} />
           </Route>
-          <Route path="admin" >
-            <Route index />
+          <Route path="admin" element={<AdminLayout />}>
+            <Route index element={<Navigate to="dashboard" />} />
+            <Route path="dashboard" element={<DashBoard />} />
             <Route path="products">
-              <Route index />
-              <Route path='add' />
-              <Route path=':id/update' />
+              <Route index element={<ProductManagerPage />} />
+              <Route path='add' element={<AddProductPage />} />
+              <Route path=':id/update' element={<UpdateProductPage />} />
             </Route>
             <Route path='categories'>
               <Route index />
