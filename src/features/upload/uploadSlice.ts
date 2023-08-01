@@ -1,4 +1,4 @@
-import { addImage } from '@/api/uploadApi'
+import { addImage, updateImage } from '@/api/uploadApi'
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
@@ -17,12 +17,11 @@ const imageSlice = createSlice({
             state.isLoading = false
             state.images.push(action.payload)
         })
-        // // Update
-        // builder.addCase(updateProduct.fulfilled, (state: any, action: any) => {
-        //     state.isLoading = false
-        //     const product = action.payload
-        //     state.products = state.products.map((item: any) => item.id === product.id ? product : item)
-        // })
+        // Update
+        builder.addCase(updateImage.fulfilled, (state: any, action: any) => {
+            state.isLoading = false
+            state.images.push(action.payload)
+        })
         // // Delete
         // builder.addCase(removeProduct.fulfilled, (state: any, action: any) => {
         //     state.isLoading = false

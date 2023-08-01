@@ -1,4 +1,4 @@
-import { addProduct, getProducts, removeProduct, updateProduct } from '@/api/productApi';
+import { addProduct, getProductById, getProducts, removeProduct, updateProduct } from '@/api/productApi';
 import { IProduct } from '@/interfaces/products';
 import { createSlice } from '@reduxjs/toolkit'
 
@@ -24,6 +24,18 @@ const productSlice = createSlice({
         builder.addCase(getProducts.rejected, (state: any) => {
             state.isLoading = false
         })
+        // Fetch one
+        builder.addCase(getProductById.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(getProductById.fulfilled, (state: any, action: any) => {
+            state.isLoading = false
+            state.products = [action.payload]; // Lưu sản phẩm tìm thấy vào mảng products
+
+        })
+        builder.addCase(getProductById.rejected, (state: any) => {
+            state.isLoading = false
+        })
         // Add
         builder.addCase(addProduct.pending, (state) => {
             state.isLoading = true
@@ -42,7 +54,7 @@ const productSlice = createSlice({
         builder.addCase(updateProduct.fulfilled, (state: any, action: any) => {
             state.isLoading = false
             const product = action.payload
-            state.products = state.products.map((item: any) => item.id === product.id ? product : item)
+            state.products = state.products.map((item: any) => item._id === product._id ? product : item)
         })
         builder.addCase(updateProduct.rejected, (state: any) => {
             state.isLoading = false
@@ -54,7 +66,7 @@ const productSlice = createSlice({
         builder.addCase(removeProduct.fulfilled, (state: any, action: any) => {
             state.isLoading = false
             const id = action.payload
-            state.products = state.products.filter((product: any) => product.id != id)
+            state.products = state.products.filter((product: any) => product._id != id)
         })
         builder.addCase(removeProduct.rejected, (state: any) => {
             state.isLoading = false

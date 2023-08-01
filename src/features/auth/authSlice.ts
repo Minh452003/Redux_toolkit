@@ -2,10 +2,11 @@ import { getUsers, removeUser, signIn, signUp, updateUser } from '@/api/authApi'
 import { IUser } from '@/interfaces/auth';
 import { createSlice } from '@reduxjs/toolkit'
 
+
 const initialState = {
     users: [],
     isLoading: false,
-    error: ''
+    error: '',
 } as { users: IUser[], isLoading: boolean, error: string }
 
 const userSlice = createSlice({
@@ -27,24 +28,31 @@ const userSlice = createSlice({
         // Signin
         builder.addCase(signIn.pending, (state) => {
             state.isLoading = true
-
         })
         builder.addCase(signIn.fulfilled, (state: any, action: any) => {
             state.isLoading = false
             state.users.push(action.payload)
+            const accessToken: any = action.payload.accessToken
+            localStorage.setItem('accessToken', JSON.stringify(accessToken));
+
         })
-        builder.addCase(signIn.rejected, (state: any) => {
+        builder.addCase(signIn.rejected, (state: any, action: any) => {
             state.isLoading = false
+            state.error = action.error.message; // Lưu thông báo lỗi từ backend vào state error
         })
-        // Signin
+        // Signup
         builder.addCase(signUp.pending, (state) => {
             state.isLoading = true
         })
-        builder.addCase(signUp.fulfilled, (state: any) => {
+        builder.addCase(signUp.fulfilled, (state: any, action: any) => {
             state.isLoading = false
+            state.users.push(action.payload)
+
         })
-        builder.addCase(signUp.rejected, (state: any) => {
+        builder.addCase(signUp.rejected, (state: any, action: any) => {
             state.isLoading = false
+            state.error = action.error.message; // Lưu thông báo lỗi từ backend vào state error
+
         })
         // Update
         builder.addCase(updateUser.pending, (state) => {

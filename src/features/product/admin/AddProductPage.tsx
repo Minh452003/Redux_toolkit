@@ -27,15 +27,17 @@ const AddProductPage = () => {
                 const imageUrl = response.payload.urls[0];
                 console.log('Uploaded image successfully!', imageUrl);
                 values.image = imageUrl;
-                dispatch(addProduct(values));
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Product has been added successfully!',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                navigate("/admin/products");
+                dispatch(addProduct(values)).then(() => {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Product has been added successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    navigate("/admin/products");
+                })
+
             } else {
                 console.error('Error uploading image:', response.payload);
             }
@@ -103,6 +105,14 @@ const AddProductPage = () => {
                         <Button className='input1' icon={<AiOutlineUpload />}>Click to Upload</Button>
                     </Upload>
                 </Form.Item>
+                <Form.Item
+                    label="Remaining products"
+                    name="reQuantity"
+                    className='label1'
+                    rules={[{ required: true, message: 'Please input your remaining products!' }]}
+                >
+                    <Input className='input1' />
+                </Form.Item>
                 <Form.Item label="Select" className='label1' name="categoryId" rules={[{ required: true, message: 'Danh mục không được để trống!' }]}>
                     <Select className='input1' >
                         {categories.map((category: any) => {
@@ -112,7 +122,7 @@ const AddProductPage = () => {
                 </Form.Item>
                 <Form.Item
                     label="Product Description"
-                    name="desc"
+                    name="description"
                     className='label1'
                     rules={[{ required: true, message: 'Please input your description!' }]}
                 >

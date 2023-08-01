@@ -1,4 +1,4 @@
-import { getProducts } from "@/api/productApi";
+import { getProducts, removeProduct } from "@/api/productApi";
 import { IProduct } from "@/interfaces/products";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { Button, Skeleton, Space } from "antd";
@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { GrEdit } from 'react-icons/gr'
 import { getCategories } from "@/api/categoryApi";
 import { ICategory } from "@/interfaces/category";
+import Swal from "sweetalert2";
 
 
 
@@ -22,6 +23,42 @@ const ProductManagerPage = () => {
     useEffect(() => {
         dispatch(getCategories());
     }, [dispatch]);
+
+    const deleteProduct = (id: any) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Xóa sản phẩm
+                dispatch(removeProduct(id)).then(() => {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                })
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                // Hiển thị thông báo hủy xóa sản phẩm
+                Swal.fire(
+                    'Cancelled',
+                    'Your product is safe :)',
+                    'error'
+                )
+            }
+        })
+    }
+
+
+
+
+
     const data = products.map((product: IProduct) => {
         const category = categories.find((category: ICategory) => category._id === product.categoryId);
         return {
@@ -65,7 +102,7 @@ const ProductManagerPage = () => {
             key: 'desc',
         },
         {
-            title: 'reQuantity',
+            title: 'Remaining products',
             dataIndex: 'reQuantity',
             key: 'reQuantity',
         },
@@ -77,10 +114,10 @@ const ProductManagerPage = () => {
         {
             title: 'Action',
             key: 'action',
-            render: (_, record) => (
+            render: (_, record: any) => (
                 <Space size="middle">
                     <Button type="primary" style={{ border: '1px solid blue' }}><Link style={{ color: 'white' }} to={`/admin/products/${record.key}/update`}> <GrEdit /></Link></Button>
-                    <Button danger ><AiFillDelete /></Button>
+                    <Button danger onClick={() => deleteProduct(record.key)}><AiFillDelete /></Button>
                 </Space>
             ),
         },
@@ -94,7 +131,7 @@ const ProductManagerPage = () => {
     return (
         <div>
             <Button type="primary" className="add1" danger ><Link className="add" to={'/admin/products/add'}></Link></Button>
-            <Table columns={columns} dataSource={data} pagination={{ defaultPageSize: 6 }} />
+            <Table columns={columns} dataSource={data} pagination={{ defaultPageSize: 6 }} rowKey="key" />
         </div>
 
     )

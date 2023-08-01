@@ -3,23 +3,34 @@ import './sign.css';
 import { Button, Col, Form, Input, Row, Image } from 'antd';
 import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
-import { useAppDispatch } from '@/store/hook';
+import { useAppDispatch, useAppSelector } from '@/store/hook';
 
 const SignIn = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const { error } = useAppSelector((state: any) => state.users);
+
     const onFinish = async (values: any) => {
         const response: any = await dispatch(signIn(values));
-        const accessToken: any = response.payload.accessToken
-        localStorage.setItem('accessToken', accessToken);
-        Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Login has been added successfully!',
-            showConfirmButton: false,
-            timer: 1500
-        });
-        navigate("/admin");
+
+        if (response.type == 'auth/signin/fulfilled') {
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Login has been added successfully!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            navigate("/admin");
+        } else if (response.type == 'auth/signin/rejected') {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: error,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
 
     };
 

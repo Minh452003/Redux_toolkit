@@ -5,8 +5,14 @@ import { IUser } from '@/interfaces/auth';
 export const getUsers = createAsyncThunk(
     'auth/get',
     async () => {
-        const data = await instance.get<IUser[]>('/user');
-        return data
+        try {
+            const data = await instance.get<IUser[]>('/user');
+            return data
+        } catch (error) {
+            console.log(error);
+
+        }
+
 
     }
 )
