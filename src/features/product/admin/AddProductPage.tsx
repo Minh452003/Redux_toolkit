@@ -1,33 +1,32 @@
 
-import { getCategories } from '@/api/categoryApi';
-import { addProduct } from '@/api/productApi';
+import { useGetCategoriesQuery } from '@/api/categoryApi';
+import { useAddProductMutation } from '@/api/productApi';
 import { addImage } from '@/api/uploadApi';
-import { useAppDispatch, useAppSelector } from '@/store/hook';
+import { useAppDispatch } from '@/store/hook';
 import { Button, Form, Input, Select, Upload, UploadProps, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { useEffect } from 'react';
 import { AiOutlineUpload } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 const AddProductPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { categories } = useAppSelector((state: any) => state.categories);
-    useEffect(() => {
-        dispatch(getCategories());
-    }, [dispatch]);
+    const { data: categories } = useGetCategoriesQuery();
+    const [addProduct] = useAddProductMutation();
 
     const onFinish = async (values: any) => {
         try {
             // Gọi action addImage để upload ảnh
             const response: any = await dispatch(addImage(values.image.file.originFileObj));
+            console.log(response);
+
             // Kiểm tra xem việc upload ảnh có thành công hay không
             if (response.meta.requestStatus === 'fulfilled') {
                 // Lấy đường dẫn ảnh sau khi upload thành công từ dữ liệu trả về của action
                 const imageUrl = response.payload.urls[0];
                 console.log('Uploaded image successfully!', imageUrl);
                 values.image = imageUrl;
-                dispatch(addProduct(values)).then(() => {
+                addProduct(values).then(() => {
                     Swal.fire({
                         position: 'center',
                         icon: 'success',
@@ -82,7 +81,7 @@ const AddProductPage = () => {
                     label="Product Name"
                     name="name"
                     className='label1'
-                    rules={[{ required: true, message: 'Please input your username!' }]}
+                    rules={[{ required: true, message: 'Please input your product name!' }]}
                 >
                     <Input className='input1' />
                 </Form.Item>
@@ -115,7 +114,7 @@ const AddProductPage = () => {
                 </Form.Item>
                 <Form.Item label="Select" className='label1' name="categoryId" rules={[{ required: true, message: 'Danh mục không được để trống!' }]}>
                     <Select className='input1' >
-                        {categories.map((category: any) => {
+                        {categories?.map((category: any) => {
                             return <Select.Option key={category?._id} value={category._id}>{category.name}</Select.Option>
                         })}
                     </Select>

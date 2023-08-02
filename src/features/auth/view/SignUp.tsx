@@ -1,4 +1,4 @@
-import { signUp } from '@/api/authApi';
+import { useSignUpMutation } from '@/api/authApi';
 import './sign.css';
 import { Button, Col, Form, Input, Row, Image, Upload, UploadProps, message } from 'antd';
 import { Link, useNavigate } from "react-router-dom";
@@ -9,6 +9,8 @@ import Swal from 'sweetalert2';
 const SignUp = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const [signUp] = useSignUpMutation();
+
     const onFinish = async (values: any) => {
         try {
             // Gọi action addImage để upload ảnh
@@ -19,15 +21,25 @@ const SignUp = () => {
                 const imageUrl = response.payload.urls[0];
                 console.log('Uploaded image successfully!', imageUrl);
                 values.image = imageUrl;
-                dispatch(signUp(values));
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Register has been added successfully!',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                navigate("/signin");
+                const data: any = await signUp(values);
+                if (data.error) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: data.error.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                } else {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Register has been added successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    navigate("/signin");
+                }
             } else {
                 console.error('Error uploading image:', response.payload);
             }

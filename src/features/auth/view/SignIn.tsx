@@ -1,19 +1,26 @@
-import { signIn } from '@/api/authApi';
+import { useSignInMutation } from '@/api/authApi';
 import './sign.css';
 import { Button, Col, Form, Input, Row, Image } from 'antd';
 import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
-import { useAppDispatch, useAppSelector } from '@/store/hook';
 
 const SignIn = () => {
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { error } = useAppSelector((state: any) => state.users);
+    const [signIn] = useSignInMutation();
 
     const onFinish = async (values: any) => {
-        const response: any = await dispatch(signIn(values));
-
-        if (response.type == 'auth/signin/fulfilled') {
+        const response: any = await signIn(values);
+        if (response.error) {
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: response.error.data.message,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else {
+            const accessToken: any = response.data.accessToken
+            localStorage.setItem('accessToken', JSON.stringify(accessToken));
             Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -22,16 +29,7 @@ const SignIn = () => {
                 timer: 1500
             });
             navigate("/admin");
-        } else if (response.type == 'auth/signin/rejected') {
-            Swal.fire({
-                position: 'center',
-                icon: 'error',
-                title: error,
-                showConfirmButton: false,
-                timer: 1500
-            });
         }
-
     };
 
     const onFinishFailed = (errorInfo: any) => {

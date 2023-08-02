@@ -9,10 +9,6 @@ import './index.css'
 const Banner = () => {
     const progressCircle: any = useRef(null);
     const progressContent: any = useRef(null);
-    const onAutoplayTimeLeft = (s: any, time: any, progress: any) => {
-        progressCircle.current.style.setProperty('--progress', 1 - progress);
-        progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
-    };
 
     return (
         <Swiper
@@ -26,7 +22,6 @@ const Banner = () => {
                 clickable: true,
             }}
             modules={[Autoplay, Pagination]}
-            onAutoplayTimeLeft={onAutoplayTimeLeft}
             className="mySwiper">
 
             <SwiperSlide

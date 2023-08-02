@@ -7,11 +7,11 @@ export const instance = axios.create({
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
 
-    const accessToken = JSON.parse(localStorage.getItem('accessToken')!) || [];
-    // Nếu có token, thêm vào header của request
-    if (accessToken) {
-        config.headers['Authorization'] = `Bearer ${accessToken}`;
-    }
+    // const accessToken = JSON.parse(localStorage.getItem('accessToken')!) || [];
+    // // Nếu có token, thêm vào header của request
+    // if (accessToken) {
+    //     config.headers['Authorization'] = `Bearer ${accessToken}`;
+    // }
     return config;
 }, function (error) {
     // Do something with request error

@@ -1,41 +1,64 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import { instance } from './instance';
-import { IProduct } from '@/interfaces/products';
+import { IProduct, ProductResponse } from '@/interfaces/products';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const getProducts = createAsyncThunk(
-    'product/get',
-    async () => {
-        const data: any = await instance.get<IProduct[]>('/products');
-        return data.docs
 
-    }
-)
-export const getProductById = createAsyncThunk(
-    'product/getbyid',
-    async (id: number | string) => {
-        const data = await instance.get<IProduct>(`/products/${id}`);
-        return data
+const productApi = createApi({
+    reducerPath: 'products',
+    tagTypes: ['Product'],
+    baseQuery: fetchBaseQuery({
+        baseUrl: import.meta.env.VITE_API_URL,
+        prepareHeaders: (headers) => {
+            // Thêm logic xử lý headers ở đây nếu cần
+            const accessToken = JSON.parse(localStorage.getItem('accessToken') || '');
+            if (accessToken) {
+                headers.set('Authorization', `Bearer ${accessToken}`);
+            }
+            return headers;
+        },
 
-    }
-)
-export const addProduct = createAsyncThunk(
-    'product/add',
-    async (product: any) => {
-        const data = await instance.post<IProduct>('/products', product);
-        return data
-    }
-)
-export const updateProduct = createAsyncThunk(
-    'product/update',
-    async (product: any) => {
-        const data = await instance.patch<IProduct>(`/products/${product.id}`, product);
-        return data
-    }
-)
-export const removeProduct = createAsyncThunk(
-    'product/delete',
-    async (id: number) => {
-        await instance.delete<IProduct>(`/products/${id}`);
-        return id
-    }
-)
+    }),
+    endpoints: (builder) => ({
+        getProducts: builder.query<ProductResponse, void>({
+            query: () => '/products',
+            providesTags: ['Product']
+        }),
+        getProductById: builder.query<IProduct, number>({
+            query: (id) => `/products/${id}`,
+            providesTags: ['Product']
+        }),
+        // 
+        addProduct: builder.mutation({
+            query: (product: IProduct) => ({
+                url: '/products',
+                method: 'POST',
+                body: product
+            }),
+            invalidatesTags: ['Product']
+        }),
+        removeProduct: builder.mutation<IProduct, number>({
+            query: (id) => ({
+                url: `/products/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Product']
+        }),
+        updateProduct: builder.mutation({
+            query: (product: IProduct) => ({
+                url: `/products/${product.id}`,
+                method: 'PATCH',
+                body: product
+            }),
+            invalidatesTags: ['Product']
+        })
+    })
+});
+
+export const {
+    useGetProductsQuery,
+    useGetProductByIdQuery,
+    useAddProductMutation,
+    useRemoveProductMutation,
+    useUpdateProductMutation
+} = productApi;
+export const productReducer = productApi.reducer;
+export default productApi

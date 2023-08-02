@@ -1,7 +1,7 @@
 
-import { userReducer } from "@/features/auth/authSlice";
-import { categoryReducer } from "@/features/category/categorySlice";
-import { productReducer } from "@/features/product/productSlice";
+import userApi, { userReducer } from "@/api/authApi";
+import categoryApi, { categoryReducer } from "@/api/categoryApi";
+import productApi, { productReducer } from "@/api/productApi";
 import { uploadReducer } from "@/features/upload/uploadSlice";
 import { Action, ThunkAction, combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
@@ -30,7 +30,11 @@ const rootReducer = combineReducers({
     users: userReducer
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
-
+const additionalMiddlewares: any = [
+    productApi.middleware,
+    categoryApi.middleware,
+    userApi.middleware
+];
 
 export const store = configureStore({
     reducer: persistedReducer,
@@ -39,7 +43,7 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }),
+        }).concat(...additionalMiddlewares),
 })
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>

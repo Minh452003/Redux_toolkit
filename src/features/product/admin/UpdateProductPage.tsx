@@ -1,8 +1,7 @@
-import { getCategories } from '@/api/categoryApi';
-import { getProductById, updateProduct } from '@/api/productApi';
+import { useGetCategoriesQuery } from '@/api/categoryApi';
+import { useGetProductByIdQuery, useGetProductsQuery, useUpdateProductMutation } from '@/api/productApi';
 import { updateImage } from '@/api/uploadApi';
-import { IProduct } from '@/interfaces/products';
-import { useAppDispatch, useAppSelector } from '@/store/hook';
+import { useAppDispatch } from '@/store/hook';
 import { Button, Form, Image, Input, Select, Upload, UploadProps, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useEffect } from 'react';
@@ -14,15 +13,10 @@ const UpdateProductPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { id }: any = useParams();
-    const { categories } = useAppSelector((state: any) => state.categories);
-    const { products } = useAppSelector((state: any) => state.products);
-    const product: IProduct = products[0];
 
-    // Lấy sản phẩm từ mảng products, do chỉ có 1 sản phẩm
-    useEffect(() => {
-        dispatch(getCategories());
-        dispatch(getProductById(id));
-    }, [dispatch, id]);
+    const [updateProduct] = useUpdateProductMutation();
+    const { data: categories } = useGetCategoriesQuery();
+    const { data: product } = useGetProductByIdQuery(id);
 
     useEffect(() => {
         if (product) {
@@ -73,7 +67,7 @@ const UpdateProductPage = () => {
             }
 
             // Gọi action updateProduct để cập nhật thông tin sản phẩm
-            dispatch(updateProduct(values)).then(() => {
+            updateProduct(values).then(() => {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
@@ -135,7 +129,7 @@ const UpdateProductPage = () => {
                     label="Product Name"
                     name="name"
                     className="label1"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
+                    rules={[{ required: true, message: 'Please input your product name!' }]}
                 >
                     <Input className="input1" />
                 </Form.Item>
@@ -175,7 +169,7 @@ const UpdateProductPage = () => {
                     rules={[{ required: true, message: 'Danh mục không được để trống!' }]}
                 >
                     <Select className="input1">
-                        {categories.map((category: any) => {
+                        {categories?.map((category: any) => {
                             return (
                                 <Select.Option key={category?._id} value={category._id}>
                                     {category.name}

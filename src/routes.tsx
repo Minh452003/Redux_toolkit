@@ -8,6 +8,9 @@ import DashBoard from "./features/pages/DashBoard";
 import ProductManagerPage from "./features/product/admin/ProductManagerPage";
 import AddProductPage from "./features/product/admin/AddProductPage";
 import UpdateProductPage from "./features/product/admin/UpdateProductPage";
+import CategoryManagerPage from "./features/category/CategoryManagerPage";
+import AddCategory from "./features/category/AddCategory";
+import UpdateCategoryPage from "./features/category/UpdateCategoryPage";
 
 export const router = createBrowserRouter([
     {
@@ -34,9 +37,10 @@ export const router = createBrowserRouter([
                 ],
             },
             {
-                path: 'categories', element: <ProductManagerPage />, children: [
-                    { path: 'add', element: <AddProductPage /> },
-                    { path: ':id/update', element: <UpdateProductPage /> },
+                path: 'categories', children: [
+                    { index: true, element: <CategoryManagerPage /> }, // Redirect to add page by default
+                    { path: 'add', element: <AddCategory /> },
+                    { path: ':id/update', element: <UpdateCategoryPage /> },
                 ]
             }
         ]

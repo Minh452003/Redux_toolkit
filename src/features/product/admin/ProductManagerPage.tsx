@@ -1,28 +1,20 @@
-import { getProducts, removeProduct } from "@/api/productApi";
 import { IProduct } from "@/interfaces/products";
-import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { Button, Skeleton, Space } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
-import { useEffect } from "react";
-import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { GrEdit } from 'react-icons/gr'
-import { getCategories } from "@/api/categoryApi";
 import { ICategory } from "@/interfaces/category";
 import Swal from "sweetalert2";
+import { useGetProductsQuery, useRemoveProductMutation } from "@/api/productApi";
+import { useGetCategoriesQuery } from "@/api/categoryApi";
+import { AiFillDelete } from "react-icons/ai";
 
 
 
 const ProductManagerPage = () => {
-    const dispatch = useAppDispatch();
-    const { products, isLoading, error } = useAppSelector((state: any) => state.products);
-    const { categories } = useAppSelector((state: any) => state.categories);
-    useEffect(() => {
-        dispatch(getProducts());
-    }, [dispatch]);
-    useEffect(() => {
-        dispatch(getCategories());
-    }, [dispatch]);
+    const { data: products, error, isLoading: isLoadingFetching } = useGetProductsQuery();
+    const { data: categories } = useGetCategoriesQuery();
+    const [removeProduct] = useRemoveProductMutation();
 
     const deleteProduct = (id: any) => {
         Swal.fire({
@@ -37,7 +29,7 @@ const ProductManagerPage = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 // Xóa sản phẩm
-                dispatch(removeProduct(id)).then(() => {
+                removeProduct(id).then(() => {
                     Swal.fire(
                         'Deleted!',
                         'Your file has been deleted.',
@@ -55,12 +47,8 @@ const ProductManagerPage = () => {
         })
     }
 
-
-
-
-
-    const data = products.map((product: IProduct) => {
-        const category = categories.find((category: ICategory) => category._id === product.categoryId);
+    const data = products?.docs?.map((product: IProduct) => {
+        const category = categories?.find((category: ICategory) => category._id === product.categoryId);
         return {
             key: product._id,
             name: product.name,
@@ -71,15 +59,9 @@ const ProductManagerPage = () => {
             categoryId: category ? category.name : ''
         }
     });
-    interface DataType {
-        key: string;
-        name: string;
-        age: number;
-        address: string;
-        tags: string[];
-    }
 
-    const columns: ColumnsType<DataType> = [
+
+    const columns: ColumnsType<any> = [
         {
             title: 'Product Name',
             dataIndex: 'name',
@@ -126,9 +108,16 @@ const ProductManagerPage = () => {
 
 
 
-    if (isLoading) return <Skeleton />;
-    if (error) return <div>{error}</div>;
-    return (
+    if (isLoadingFetching) return <Skeleton />;
+    if (error) {
+        if ("data" in error && "status" in error) {
+            return (
+                <div>
+                    {error.status} - {JSON.stringify(error.data)}
+                </div>
+            );
+        }
+    } return (
         <div>
             <Button type="primary" className="add1" danger ><Link className="add" to={'/admin/products/add'}></Link></Button>
             <Table columns={columns} dataSource={data} pagination={{ defaultPageSize: 6 }} rowKey="key" />
