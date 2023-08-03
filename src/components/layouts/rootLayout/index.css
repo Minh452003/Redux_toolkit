@@ -93,83 +93,131 @@ a,
     transition: all .3s ease-in-out;
 }
 
-.btn-custom {
-    margin-top: 20px;
-    background-color: transparent !important;
-    border: 2px solid #ddd;
-    padding: 12px 40px;
-    font-size: 16px;
-}
-
-.lead {
-    font-size: 18px;
-    line-height: 30px;
-    color: #767676;
-    margin: 0;
-    padding: 0;
-}
-
-blockquote {
-    margin: 20px 0 20px;
-    padding: 30px;
-}
-
-ul,
-li,
-ol {
-    list-style: none;
-    margin: 0px;
-    padding: 0px;
-}
-
-button:focus {
-    outline: none;
-}
-
-.form-control::-moz-placeholder {
-    color: #2a2a2a;
-    opacity: 1;
-}
-
-/*  */
-.top-navbar {
-    position: relative;
-    z-index: 10;
-}
-
-.top-navbar .navbar {
-    padding: 15px 0px;
-    position: fixed;
+nav {
+    position: absolute;
+    box-shadow: 0 5px 10px 5px rgba(0, 0, 0, .3);
+    height: 80px;
     width: 100%;
-    transition: height .3s ease-out, background .3s ease-out, box-shadow .3s ease-out;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    z-index: 100;
 }
 
-.top-navbar .navbar-light .navbar-nav .nav-link {
-    color: #010101 !important;
-    font-size: 18px;
-    padding: 0px 20px;
-    border-radius: 4px;
-    font-family: Georgia, "Times New Roman", Times, serif;
+label.logo {
+    color: #fcf2fa;
+    font-size: 30px;
+    line-height: 80px;
+    padding: 0 80px;
+    letter-spacing: -1px;
+    font-weight: 800;
+    font-style: italic;
+    transition: .2s ease;
+    text-shadow: 3px 5px 20px #230622aa;
 }
 
-.top-navbar .navbar-light .navbar-nav .nav-item .nav-link:hover {
+nav ul {
+    float: right;
+    margin-right: 80px;
+    z-index: 1000;
+    /* Đặt giá trị z-index cao hơn */
+
+}
+
+nav ul li {
+    display: inline-block;
+    line-height: 80px;
+}
+
+nav ul li a {
+    color: #010101;
+    font-size: 17px;
+    padding: 7px 13px;
+    border-radius: 13px;
+    text-transform: uppercase;
+}
+
+a.active,
+a:hover {
     background: #d0a772;
-    color: #ffffff !important;
+    transition: .5s;
+    color: #FFF;
 }
 
-.top-navbar .navbar-light .navbar-nav .nav-item.active .nav-link {
-    background: #d0a772;
-    color: #ffffff !important;
-    border-radius: 4px;
-    font-family: Georgia, "Times New Roman", Times, serif;
-
+.checkbtn {
+    line-height: 80px;
+    font-size: 30px;
+    float: right;
+    cursor: pointer;
+    margin-right: 40px;
+    display: none;
 }
 
-.navbar-light .navbar-toggler:hover {
-    background: #cfa671;
+.checkbtn i {
+    color: #fcf2fa;
+    padding: 5px;
+    border-radius: 10px;
+    transition: .5s ease;
+}
+
+.checkbtn i:hover {
+    background: #912a7eaa;
+}
+
+#check {
+    display: none;
+}
+
+/* responsove code */
+@media (max-width: 952px) {
+
+    /* table mode */
+    label.logo {
+        font-size: 25px;
+        padding-left: 50px;
+    }
+
+    nav ul li a {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 858px) {
+
+    /* mobile mode */
+    .checkbtn {
+        display: block;
+    }
+
+    ul {
+        position: fixed;
+        width: 100%;
+        height: 60vh;
+        background: linear-gradient(to right, rgba(178, 47, 147, .6)5%, rgba(35, 6, 34, .9));
+        top: 80px;
+        left: -100%;
+        padding-top: 80px;
+        text-align: center;
+        transition: .5s ease;
+    }
+
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+        line-height: 30px;
+    }
+
+    nav ul li a {
+        font-size: 20px;
+        color: #FFF !important;
+    }
+
+    a.active,
+    a:hover {
+        background: none;
+        color: #12d2db;
+        text-shadow: 0 10px 15px #12d2db;
+    }
+
+    #check:checked~ul {
+        left: 0;
+    }
 }
 
 /*  */
@@ -274,7 +322,6 @@ button:focus {
     line-height: 50px;
     display: inline-block;
     padding: 0 10px;
-    float: left;
     width: 100%;
     border: none;
     cursor: pointer;
@@ -326,14 +373,15 @@ button:focus {
 .check {
     position: relative;
     appearance: none;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-color: #912a7eaa;
     box-shadow: 0 5px 10px 5px rgba(0, 0, 0, .3);
     transition: .2s ease;
     cursor: pointer;
     outline: none;
+    margin-top: 20%;
 }
 
 .check::before {
@@ -375,11 +423,13 @@ button:focus {
 .btn-image {
     background-color: #ea5757;
     float: right;
+    margin-top: 20%;
 }
 
 .btn-camera {
     background-color: #f7b24f;
     float: right;
+    margin-top: 20%;
 }
 
 .check:checked~.items {

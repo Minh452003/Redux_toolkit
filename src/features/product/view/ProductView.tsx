@@ -1,7 +1,23 @@
 
-
+import { useGetProductsQuery } from '@/api/productApi';
 import './product.css'
+import { useGetCategoriesQuery } from '@/api/categoryApi';
+import { IProduct, ProductResponse } from '@/interfaces/products';
+import { Button, Skeleton } from 'antd';
+import { Link } from 'react-router-dom';
 const ProductView = () => {
+    const { data: products, error, isLoading: isLoadingFetching } = useGetProductsQuery();
+    const { data: categories } = useGetCategoriesQuery();
+    if (isLoadingFetching) return <Skeleton />;
+    if (error) {
+        if ("data" in error && "status" in error) {
+            return (
+                <div>
+                    {error.status} - {JSON.stringify(error.data)}
+                </div>
+            );
+        }
+    }
     return (
         <div>
             {/* <!-- Start Menu --> */}
@@ -20,114 +36,27 @@ const ProductView = () => {
                             <div className="special-menu text-center">
                                 <div className="button-group filter-button-group">
                                     <button className="active" data-filter="*">All</button>
-                                    <button data-filter=".drinks">Drinks</button>
-                                    <button data-filter=".lunch">Lunch</button>
-                                    <button data-filter=".dinner">Dinner</button>
+                                    {categories?.map((category) => (
+                                        <button data-filter=".drinks" key={category._id}>{category.name}</button>
+                                    ))}
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div className="row special-list">
-                        <div className="col-lg-4 col-md-6 special-grid drinks">
-                            <div className="gallery-single fix">
-                                <img src="https://dayphache.edu.vn/wp-content/uploads/2016/09/mojito-raspberry.jpg" className="img-fluid" alt="Image" />
-                                <div className="why-text">
-                                    <h4>Special Drinks 1</h4>
-                                    <p>Sed id magna vitae eros sagittis euismod.</p>
-                                    <h5> $7.79</h5>
+                        {products?.docs?.map((product: IProduct) => (
+                            <div className="col-lg-3 col-md-4 special-grid drinks" key={product._id}>
+                                <div className="gallery-single fix">
+                                    <img src={product.image?.url} className="img-fluid img1" alt="Image" />
+                                    <div className="why-text">
+                                        <h4>{product.name}</h4>
+                                        <p>{product.description}</p>
+                                        <h5>{product.price}</h5>
+                                        <Button className='btn1'><Link to={`/products/${product._id}`}>Detail</Link></Button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 special-grid drinks">
-                            <div className="gallery-single fix">
-                                <img src="https://dayphache.edu.vn/wp-content/uploads/2016/09/mojito-raspberry.jpg" className="img-fluid" alt="Image" />
-                                <div className="why-text">
-                                    <h4>Special Drinks 2</h4>
-                                    <p>Sed id magna vitae eros sagittis euismod.</p>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 special-grid drinks">
-                            <div className="gallery-single fix">
-                                <img src="https://dayphache.edu.vn/wp-content/uploads/2016/09/mojito-raspberry.jpg" className="img-fluid" alt="Image" />
-                                <div className="why-text">
-                                    <h4>Special Drinks 3</h4>
-                                    <p>Sed id magna vitae eros sagittis euismod.</p>
-                                    <h5> $10.79</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 special-grid lunch">
-                            <div className="gallery-single fix">
-                                <img src="https://dayphache.edu.vn/wp-content/uploads/2016/09/mojito-raspberry.jpg" className="img-fluid" alt="Image" />
-                                <div className="why-text">
-                                    <h4>Special Lunch 1</h4>
-                                    <p>Sed id magna vitae eros sagittis euismod.</p>
-                                    <h5> $15.79</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 special-grid lunch">
-                            <div className="gallery-single fix">
-                                <img src="https://dayphache.edu.vn/wp-content/uploads/2016/09/mojito-raspberry.jpg" className="img-fluid" alt="Image" />
-                                <div className="why-text">
-                                    <h4>Special Lunch 2</h4>
-                                    <p>Sed id magna vitae eros sagittis euismod.</p>
-                                    <h5> $18.79</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 special-grid lunch">
-                            <div className="gallery-single fix">
-                                <img src="https://dayphache.edu.vn/wp-content/uploads/2016/09/mojito-raspberry.jpg" className="img-fluid" alt="Image" />
-                                <div className="why-text">
-                                    <h4>Special Lunch 3</h4>
-                                    <p>Sed id magna vitae eros sagittis euismod.</p>
-                                    <h5> $20.79</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 special-grid dinner">
-                            <div className="gallery-single fix">
-                                <img src="https://dayphache.edu.vn/wp-content/uploads/2016/09/mojito-raspberry.jpg" className="img-fluid" alt="Image" />
-                                <div className="why-text">
-                                    <h4>Special Dinner 1</h4>
-                                    <p>Sed id magna vitae eros sagittis euismod.</p>
-                                    <h5> $25.79</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 special-grid dinner">
-                            <div className="gallery-single fix">
-                                <img src="https://dayphache.edu.vn/wp-content/uploads/2016/09/mojito-raspberry.jpg" className="img-fluid" alt="Image" />
-                                <div className="why-text">
-                                    <h4>Special Dinner 2</h4>
-                                    <p>Sed id magna vitae eros sagittis euismod.</p>
-                                    <h5> $22.79</h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 special-grid dinner">
-                            <div className="gallery-single fix">
-                                <img src="https://dayphache.edu.vn/wp-content/uploads/2016/09/mojito-raspberry.jpg" className="img-fluid" alt="Image" />
-                                <div className="why-text">
-                                    <h4>Special Dinner 3</h4>
-                                    <p>Sed id magna vitae eros sagittis euismod.</p>
-                                    <h5> $24.79</h5>
-                                </div>
-                            </div>
-                        </div>
-
+                        ))}
                     </div>
                 </div>
             </div>

@@ -154,6 +154,7 @@ body {
     color: #342E37;
     white-space: nowrap;
     overflow-x: hidden;
+    text-align: center;
 }
 
 #sidebar .side-menu.top li.active a {

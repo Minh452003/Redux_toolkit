@@ -24,57 +24,38 @@ const Banner = () => {
             modules={[Autoplay, Pagination]}
             className="mySwiper">
 
-            <SwiperSlide
-
-            >
-                <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQYeKuDwTXVtCFAAFiEoc0hwDyFgSMQ-32L7mDpQmKEAFp1A3Sr" alt="" />
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <h1 className="m-b-20"><strong>Welcome To <br /> Yamifood Restaurant</strong></h1>
-                            <p className="m-b-40">See how your users experience your website in realtime or view
-                                <br />
-                                trends to see any changes in performance over time.</p>
-                            <br />
-                            <p><a className="reservation" href="#">Reservation</a></p>
+            <SwiperSlide>
+                <div className="container4">
+                    <div className="card4">
+                        <img src="https://res.cloudinary.com/dkvghcobl/image/upload/v1691053368/lbnf4cwghozt7ebebetj.png" className="card-img4 slowfloat" />
+                        <div className="card-body4">
+                            <h5 className='namebaner'>Deluxe Rice</h5>
+                            <p className='bannerdes'>A nutritious full-course deluxe meal, mainly consisting of grilled or stewed beef or chicken, potatoes, beans, boiled vegetables, and a piece of cake served with sauce. All for just 25,000 Vietnamese dong</p>
                         </div>
                     </div>
                 </div>
-
-
             </SwiperSlide>
             <SwiperSlide>
-                <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQYeKuDwTXVtCFAAFiEoc0hwDyFgSMQ-32L7mDpQmKEAFp1A3Sr" alt="" />
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <h1 className="m-b-20"><strong>Welcome To <br /> Yamifood Restaurant</strong></h1>
-                            <p className="m-b-40">See how your users experience your website in realtime or view
-                                <br />
-                                trends to see any changes in performance over time.</p>
-                            <br />
-
-                            <p><a className="reservation" href="#">Reservation</a></p>
+                <div className="container4">
+                    <div className="card4">
+                        <img src="https://res.cloudinary.com/dkvghcobl/image/upload/v1691053367/lbstthllttysy6v3ykxo.png" className="card-img4 slowfloat" />
+                        <div className="card-body4">
+                            <h5 className='namebaner'>Chia seed drink</h5>
+                            <p className='bannerdes'>Chia seed drink contains many beneficial nutrients for health. Only for 15,000 Vietnamese dong.</p>
                         </div>
                     </div>
                 </div>
-
             </SwiperSlide>
             <SwiperSlide>
-                <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQYeKuDwTXVtCFAAFiEoc0hwDyFgSMQ-32L7mDpQmKEAFp1A3Sr" alt="" className='banner' />
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <h1 className="m-b-20"><strong>Welcome To <br /> Yamifood Restaurant</strong></h1>
-                            <p className="m-b-40">See how your users experience your website in realtime or view
-                                <br />
-                                trends to see any changes in performance over time.</p>
-                            <br />
-                            <p><a className="reservation" href="#">Reservation</a></p>
+                <div className="container4">
+                    <div className="card4">
+                        <img src="https://res.cloudinary.com/dkvghcobl/image/upload/v1691053367/gqamsw8n0k9h4aeyfl00.png" className="card-img4 slowfloat" />
+                        <div className="card-body4">
+                            <h5 className='namebaner'>Passion fruit lemon tea</h5>
+                            <p className='bannerdes'>You're already quite familiar with lemon tea, lemon water, lemon smoothies... So how about passion fruit lemon tea? Only for 15,000 Vietnamese dong.</p>
                         </div>
                     </div>
                 </div>
-
             </SwiperSlide>
 
             <div className="autoplay-progress" slot="container-end">

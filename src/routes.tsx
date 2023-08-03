@@ -11,6 +11,7 @@ import UpdateProductPage from "./features/product/admin/UpdateProductPage";
 import CategoryManagerPage from "./features/category/CategoryManagerPage";
 import AddCategory from "./features/category/AddCategory";
 import UpdateCategoryPage from "./features/category/UpdateCategoryPage";
+import ProductDetail from "./features/product/view/ProductDetail";
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
         children: [
             { index: true, element: <HomePage /> },
             { path: 'products', element: '' },
+            { path: 'products/:id', element: <ProductDetail /> },
             { path: 'signin', element: <SignIn /> },
             { path: 'signup', element: <SignUp /> }
         ]

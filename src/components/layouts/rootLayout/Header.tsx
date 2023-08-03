@@ -1,28 +1,25 @@
 import { PiShoppingCartSimpleFill } from 'react-icons/pi'
 import { BiSolidUserCircle } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
+import { AiOutlineMenu } from 'react-icons/ai'
 
 const Header = () => {
     return (
         <header className="top-navbar">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className="container">
-                    <a className="navbar-brand" href="index.html">
-                        <img src="https://img.freepik.com/premium-vector/vintage-motorcycle-skull-wing-logo_638909-335.jpg" alt="" width={100} />
-                    </a>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className=" navbar-collapse" id="navbars-rs-food">
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item active"><Link className="nav-link" to={'/'}>Home</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to={'/'}>Menu</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to={'/'}>About</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to={'/'}>Blogs</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to={'/'}>Contact</Link></li>
-                        </ul>
-
-                    </div>
+                <input type="checkbox" id="check" />
+                <label htmlFor="check" className="checkbtn">
+                    <AiOutlineMenu />
+                </label>
+                <label className="logo">
+                    <img src="https://img.freepik.com/premium-vector/vintage-motorcycle-skull-wing-logo_638909-335.jpg" alt="" width={100} />
+                </label>
+                <ul className="navbar-nav ml-auto">
+                    <li ><Link to={'/'}>Home</Link></li>
+                    <li ><Link to={'/'}>Menu</Link></li>
+                    <li ><Link to={'/'}>About</Link></li>
+                    <li ><Link to={'/'}>Blogs</Link></li>
+                    <li ><Link to={'/'}>Contact</Link></li>
                     <span>
                         <input type="checkbox" className="check" />
                         <div className="items btn-camera">
@@ -32,7 +29,7 @@ const Header = () => {
                             <Link style={{ color: 'white' }} to={'/signin'}><BiSolidUserCircle /></Link>
                         </div>
                     </span>
-                </div>
+                </ul>
 
             </nav>
         </header>

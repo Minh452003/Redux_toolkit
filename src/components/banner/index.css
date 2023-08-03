@@ -58,7 +58,7 @@
 
 .reservation {
     color: #cfa671;
-    border: 2px solid #d0a772;
+    /* border: 2px solid #d0a772; */
     padding: 10px 10px 10px 10px;
     text-transform: uppercase;
     border-radius: 5px;
@@ -68,4 +68,79 @@
 .reservation:hover {
     color: #FFF;
     background-color: #d0a772;
+}
+
+
+.container4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container4::before {
+    font-family: 'Font Awesome 5 Free';
+    content: "\f7e4";
+    font-weight: 900;
+    font-size: 50vh;
+    color: #e89038;
+    position: absolute;
+    opacity: .7;
+    top: 30vh;
+    left: 60vw;
+    width: 30vw;
+}
+
+.card4 {
+    display: flex;
+    justify-content: end;
+    color: #fff;
+    text-align: right;
+    padding: 50px;
+    border-radius: 30px;
+    border: 5px solid rgba(225, 225, 225, 0.1);
+    background: rgba(220, 214, 214, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
+    z-index: 1;
+    width: 90%;
+    height: 500px;
+    margin-top: 20px;
+}
+
+.card-body4 {
+    width: 75%;
+}
+
+.namebaner {
+    color: #fc8b3f;
+    font-size: 45px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: italic;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+}
+
+.card-img4 {
+    top: -130px;
+    right: 250px;
+    object-fit: cover !important;
+}
+
+.slowfloat {
+    animation: SlowFloat 2s infinite alternate;
+}
+
+.bannerdes {
+    color: black;
+}
+
+@keyframes SlowFloat {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-10px);
+    }
 }
