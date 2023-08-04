@@ -21,7 +21,7 @@ const categoryApi = createApi({
             query: () => '/categories',
             providesTags: ['Category']
         }),
-        getCategoryById: builder.query<ICategory, number>({
+        getCategoryById: builder.query<ICategory, number | string>({
             query: (id) => `/categories/${id}`,
             providesTags: ['Category']
         }),

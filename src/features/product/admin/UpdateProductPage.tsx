@@ -1,5 +1,5 @@
 import { useGetCategoriesQuery } from '@/api/categoryApi';
-import { useGetProductByIdQuery, useGetProductsQuery, useUpdateProductMutation } from '@/api/productApi';
+import { useGetProductByIdQuery, useUpdateProductMutation } from '@/api/productApi';
 import { updateImage } from '@/api/uploadApi';
 import { useAppDispatch } from '@/store/hook';
 import { Button, Form, Image, Input, Select, Upload, UploadProps, message } from 'antd';
@@ -14,7 +14,7 @@ const UpdateProductPage = () => {
     const navigate = useNavigate();
     const { id }: any = useParams();
 
-    const [updateProduct] = useUpdateProductMutation();
+    const [updateProduct, resultUpdate] = useUpdateProductMutation();
     const { data: categories } = useGetCategoriesQuery();
     const { data: product } = useGetProductByIdQuery(id);
 
@@ -188,7 +188,9 @@ const UpdateProductPage = () => {
                 </Form.Item>
                 <Form.Item>
                     <Button style={{ width: '100%', height: 35 }} type="primary" htmlType="submit" className="button1">
-                        UPDATE PRODUCT
+                        {resultUpdate.isLoading ? <div className="spinner-border text-info" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div> : "UPDATE PRODUCT"}
                     </Button>
                 </Form.Item>
             </Form>

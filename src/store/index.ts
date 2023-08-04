@@ -1,6 +1,7 @@
 
 import userApi, { userReducer } from "@/api/authApi";
 import categoryApi, { categoryReducer } from "@/api/categoryApi";
+import commentApi, { commentReducer } from "@/api/commentApi";
 import productApi, { productReducer } from "@/api/productApi";
 import { uploadReducer } from "@/features/upload/uploadSlice";
 import { Action, ThunkAction, combineReducers, configureStore } from "@reduxjs/toolkit";
@@ -27,13 +28,15 @@ const rootReducer = combineReducers({
     products: productReducer,
     categories: categoryReducer,
     uploads: uploadReducer,
-    users: userReducer
+    users: userReducer,
+    comments: commentReducer
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 const additionalMiddlewares: any = [
     productApi.middleware,
     categoryApi.middleware,
-    userApi.middleware
+    userApi.middleware,
+    commentApi.middleware
 ];
 
 export const store = configureStore({

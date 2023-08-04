@@ -26,19 +26,20 @@ const AdminLayout = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+    useEffect(() => {
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li .a');
 
-    const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li .a');
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
 
-    allSideMenu.forEach(item => {
-        const li = item.parentElement;
-
-        item.addEventListener('click', function () {
-            allSideMenu.forEach(i => {
-                i.parentElement?.classList.remove('active');
+            item.addEventListener('click', function () {
+                allSideMenu.forEach(i => {
+                    i.parentElement?.classList.remove('active');
+                })
+                li?.classList.add('active');
             })
-            li?.classList.add('active');
-        })
-    });
+        });
+    }, [])
 
     return (
         <div>
@@ -51,43 +52,43 @@ const AdminLayout = () => {
                     <li className="active">
                         <Link to={'dashboard'} className="a">
                             <BsFillHouseDashFill />
-                            <span className="text">Dashboard</span>
+                            <span className="text1">Dashboard</span>
                         </Link>
                     </li>
                     <li>
                         <Link to={'products'} className="a">
                             <TbBrandProducthunt />
-                            <span className="text">Products</span>
+                            <span className="text1">Products</span>
                         </Link>
                     </li>
                     <li>
                         <Link to={'categories'} className="a">
                             <MdCategory />
-                            <span className="text">Categories</span>
+                            <span className="text1">Categories</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="blogs" className="a">
                             <FaBlogger />
-                            <span className="text">Blog</span>
+                            <span className="text1">Blog</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="user" className="a">
                             <AiOutlineUser />
-                            <span className="text">Users</span>
+                            <span className="text1">Users</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="comments" className="a">
                             <AiOutlineComment />
-                            <span className="text">Comments</span>
+                            <span className="text1">Comments</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="bill" className="a">
                             <AiOutlineShoppingCart />
-                            <span className="text">Carts</span>
+                            <span className="text1">Carts</span>
                         </Link>
                     </li>
                 </ul>
@@ -95,7 +96,7 @@ const AdminLayout = () => {
                     <li>
                         <Link to="#" className="logout">
                             <RiLogoutCircleLine />
-                            <span className="text">Logout</span>
+                            <span className="text1">Logout</span>
                         </Link>
                     </li>
                 </ul>

@@ -12,7 +12,7 @@ const AddProductPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { data: categories } = useGetCategoriesQuery();
-    const [addProduct] = useAddProductMutation();
+    const [addProduct, resultAdd] = useAddProductMutation();
 
     const onFinish = async (values: any) => {
         try {
@@ -130,7 +130,9 @@ const AddProductPage = () => {
                 </Form.Item>
                 <Form.Item >
                     <Button style={{ width: "100%", height: 35 }} type="primary" htmlType="submit" className='button1'>
-                        ADD PRODUCT
+                        {resultAdd.isLoading ? <div className="spinner-border text-info" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div> : " ADD PRODUCT"}
                     </Button>
                 </Form.Item>
             </Form>

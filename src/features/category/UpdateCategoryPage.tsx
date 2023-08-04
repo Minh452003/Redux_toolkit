@@ -1,4 +1,4 @@
-import { useAddCategoryMutation, useGetCategoryByIdQuery, useUpdateCategoryMutation } from '@/api/categoryApi';
+import { useGetCategoryByIdQuery, useUpdateCategoryMutation } from '@/api/categoryApi';
 import { Button, Form, Input } from 'antd';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -6,10 +6,9 @@ import Swal from 'sweetalert2';
 
 const UpdateCategoryPage = () => {
     const navigate = useNavigate();
-    const [addCategory, resultAdd] = useAddCategoryMutation();
     const { id }: any = useParams();
 
-    const [updateCategory] = useUpdateCategoryMutation();
+    const [updateCategory, resultAdd] = useUpdateCategoryMutation();
     const { data: category } = useGetCategoryByIdQuery(id);
     useEffect(() => {
         if (category) {
@@ -73,7 +72,7 @@ const UpdateCategoryPage = () => {
                     <Button style={{ width: "100%", height: 35 }} type="primary" htmlType="submit" className='button1'>
                         {resultAdd.isLoading ? <div className="spinner-border text-info" role="status">
                             <span className="visually-hidden">Loading...</span>
-                        </div> : "ADD CATEGORY"}
+                        </div> : "UPDATE CATEGORY"}
                     </Button>
                 </Form.Item>
             </Form>

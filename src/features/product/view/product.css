@@ -181,10 +181,13 @@
     overflow: auto;
 }
 
-.comment-wrapper .media-list .media img {
-    width: 64px;
-    height: 64px;
-    border: 2px solid #e5e7e8;
+.comment-wrapper .media-list .media .img-circle {
+    float: left !important;
+    margin-right: 10px;
+    border-radius: 50%;
+    width: 50px !important;
+    height: 50px !important;
+    border: 2px solid #e5e7e8 !important;
 }
 
 .comment-wrapper .media-list .media {
@@ -206,7 +209,6 @@
     float: right;
 }
 
-.img-circle {
+.pull-left {
     float: left;
-    margin-right: 10px;
 }

@@ -10,14 +10,23 @@ export const getCommentFromProduct = async (req, res) => {
             path: 'userId',
             select: 'name email image',
         });
-        if (!comments) {
+        if (!comments || comments.length === 0) {
             return res.status(404).json({
                 message: 'Không tìm thấy bình luận',
             });
         }
+
+        const formattedComments = comments.map(comment => ({
+            _id: comment._id,
+            userId: comment.userId,
+            productId: comment.productId,
+            description: comment.description,
+            formattedCreatedAt: comment.formattedCreatedAt,
+        }));
+
         return res.status(200).json({
             message: 'Lấy thành công comment',
-            comments,
+            comments: formattedComments,
         });
     } catch (error) {
         res.status(400).json({
@@ -25,6 +34,7 @@ export const getCommentFromProduct = async (req, res) => {
         });
     }
 };
+
 
 
 export const getOneComment = async (req, res) => {

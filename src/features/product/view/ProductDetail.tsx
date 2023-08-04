@@ -1,8 +1,8 @@
 import { useGetProductByIdQuery, useGetProductsQuery } from "@/api/productApi";
+import CommentPage from "@/features/comment/view/CommentPage";
 import { IProduct } from "@/interfaces/products";
 import { Button, Image } from "antd";
 import { useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
 import { BsCartPlus, BsStar, BsStarHalf } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 
@@ -79,7 +79,12 @@ const ProductDetail = () => {
                                         <div className="input-group il">
                                             <div id="updateQuantity">
                                                 <span className="qua" onClick={decreaseQuantity}>-</span>
-                                                <input className="quainput" value={quantity} type="text" />
+                                                <input
+                                                    className="quainput"
+                                                    value={quantity}
+                                                    type="text"
+                                                    onChange={(e) => setQuantity(parseInt(e.target.value))}
+                                                />
                                                 <span className="qua" onClick={increaseQuantity} >+</span>
                                             </div>
                                         </div>
@@ -97,69 +102,7 @@ const ProductDetail = () => {
                         <div className="col-lg-8 mb-4">
                             <div className="border rounded-2 px-3 py-2 bg-white">
                                 {/*  */}
-                                <div className="container">
-                                    <div className="row ">
-                                        <div className="comment-wrapper">
-                                            <div className="panel panel-info">
-                                                <h5 className="card-title">Comments</h5>
-                                                <br />
-                                                <div className="panel-body">
-                                                    <textarea className="form-control" placeholder="write a comment..." rows={3}></textarea>
-                                                    <Button type="primary" icon={<AiOutlinePlus />} className="btnComent" />
-                                                    <div className="clearfix"></div>
-                                                    <hr />
-                                                    <ul className="media-list">
-                                                        <li className="media">
-                                                            <a href="#" className="pull-left">
-                                                                <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" className="img-circle" />
-                                                            </a>
-                                                            <div className="media-body">
-                                                                <span className="text-muted pull-right">
-                                                                    <small className="text-muted1">30 min ago</small>
-                                                                </span>
-                                                                <strong className="text-success">@MartinoMont</strong>
-                                                                <p>
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                                    Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
-                                                                </p>
-                                                            </div>
-                                                        </li>
-                                                        <li className="media">
-                                                            <a href="#" className="pull-left">
-                                                                <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" className="img-circle" />
-                                                            </a>
-                                                            <div className="media-body">
-                                                                <span className="text-muted pull-right">
-                                                                    <small className="text-muted1">30 min ago</small>
-                                                                </span>
-                                                                <strong className="text-success">@LaurenceCorreil</strong>
-                                                                <p>
-                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                                    Lorem ipsum dolor <a href="#">#ipsumdolor </a>adipiscing elit.
-                                                                </p>
-                                                            </div>
-                                                        </li>
-                                                        <li className="media">
-                                                            <a href="#" className="pull-left">
-                                                                <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" className="img-circle" />
-                                                            </a>
-                                                            <div className="media-body">
-                                                                <span className="text-muted pull-right">
-                                                                    <small className="text-muted1">30 min ago</small>
-                                                                </span>
-                                                                <strong className="text-success">@JohnNida</strong>
-                                                                <p>
-                                                                    Lorem ipsum dolor <a href="#">#sitamet</a> sit amet, consectetur adipiscing elit.
-                                                                </p>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
+                                <CommentPage productId={product?._id} />
                                 {/*  */}
                             </div>
                         </div>
@@ -169,7 +112,7 @@ const ProductDetail = () => {
                                     <div className="card-body">
                                         <h5 className="card-title">Similar items</h5>
                                         {similarProducts?.map((product) => (
-                                            <div className="d-flex mb-3">
+                                            <div className="d-flex mb-3" key={product._id}>
                                                 <a href="#" className="me-3">
                                                     <Image className="img-md img-thumbnail" style={{ width: '96px', height: '96px', objectFit: 'cover' }} src={product?.image?.url} />
                                                 </a>

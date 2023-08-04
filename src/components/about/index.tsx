@@ -2,8 +2,7 @@
 import './index.css'
 const About = () => {
     return (
-        <div>
-            {/* <!-- Start About --> */}
+        <div className='container'>
             <div className="about-section-box">
                 <div className="container">
                     <div className="row">

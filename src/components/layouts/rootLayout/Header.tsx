@@ -5,7 +5,7 @@ import { AiOutlineMenu } from 'react-icons/ai'
 
 const Header = () => {
     return (
-        <header className="top-navbar">
+        <header className="top-navbar sticky-top">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <input type="checkbox" id="check" />
                 <label htmlFor="check" className="checkbtn">

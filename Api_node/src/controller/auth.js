@@ -89,7 +89,11 @@ export const get = async (req, res) => {
                 message: "Hiện tt người dùng thất bại",
             })
         }
-        return res.status(200).json(data);
+        const { _id, name, email, address, role, image, formattedCreatedAt } = data;
+
+        return res.status(200).json({
+            _id, name, email, address, role, image, formattedCreatedAt
+        });
     } catch (error) {
         return res.status(400).json({
             message: error,

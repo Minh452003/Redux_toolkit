@@ -121,6 +121,14 @@ const SignUp = () => {
                             <Input.Password className='input' />
                         </Form.Item>
                         <Form.Item
+                            label="Address"
+                            name="address"
+                            className='label'
+                            rules={[{ required: true, message: 'Address cannot be empty' }]}
+                        >
+                            <Input className='input' />
+                        </Form.Item>
+                        <Form.Item
                             label="Avatar"
                             name="image"
                             className='label'

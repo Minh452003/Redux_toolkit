@@ -2,7 +2,7 @@
 import { useGetProductsQuery } from '@/api/productApi';
 import './product.css'
 import { useGetCategoriesQuery } from '@/api/categoryApi';
-import { IProduct, ProductResponse } from '@/interfaces/products';
+import { IProduct } from '@/interfaces/products';
 import { Button, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 const ProductView = () => {

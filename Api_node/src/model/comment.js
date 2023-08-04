@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { format } from "date-fns";
 
 const CommentSchema = mongoose.Schema({
   userId: {
@@ -15,8 +16,12 @@ const CommentSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  
-},
-{ timestamps: true, versionKey: false }
-);
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+CommentSchema.virtual("formattedCreatedAt").get(function () {
+  return format(this.createdAt, "HH:mm a dd/MM/yyyy");
+});
 export default mongoose.model("Comment", CommentSchema);

@@ -469,7 +469,9 @@ body {
     color: #342E37;
 }
 
-
+.text1 {
+    margin-left: 10px;
+}
 
 
 
@@ -635,7 +637,6 @@ body {
 
 
 }
-
 
 .search-results {
     border-radius: 20px;

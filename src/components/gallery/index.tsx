@@ -2,8 +2,7 @@ import './index.css'
 
 const Gallery = () => {
     return (
-        <div>
-            {/* <!-- Start Gallery --> */}
+        <div className='container'>
             <div className="gallery-box">
                 <div className="container-fluid">
                     <div className="row">
