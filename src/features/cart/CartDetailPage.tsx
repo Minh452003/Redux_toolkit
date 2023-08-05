@@ -30,6 +30,8 @@ const CartDetailPage = () => {
 
     const onFinish = async (values: any) => {
         // Xử lý khi hoàn thành form
+        console.log(values);
+
     };
 
     const onFinishFailed = (errorInfo: any) => {
