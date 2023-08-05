@@ -1,16 +1,23 @@
+import { useAddCartMutation } from "@/api/cartApi";
+import { getDecodedAccessToken } from "@/api/decoder";
 import { useGetProductByIdQuery, useGetProductsQuery } from "@/api/productApi";
 import CommentPage from "@/features/comment/view/CommentPage";
 import { IProduct } from "@/interfaces/products";
-import { Button, Image } from "antd";
+import { Button, Image, Skeleton } from "antd";
 import { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BsCartPlus, BsStar, BsStarHalf } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 const ProductDetail = () => {
-    const { id }: any = useParams();
-    const { data: product } = useGetProductByIdQuery(id);
+    const { id: paramsId }: any = useParams();
+    const decodedToken: any = getDecodedAccessToken();
+    const id = decodedToken ? decodedToken.id : null;
+    const { data: product, isLoading, error } = useGetProductByIdQuery(paramsId);
     const { data: products } = useGetProductsQuery();
+    const [addCart, resultAdd] = useAddCartMutation();
     const similarProducts = products?.docs.filter((siproduct: IProduct) => siproduct.categoryId === product?.categoryId)
     const [quantity, setQuantity] = useState(1); // Sử dụng useState để quản lý số lượng
     const decreaseQuantity = () => {
@@ -27,6 +34,60 @@ const ProductDetail = () => {
             behavior: "smooth", // Cuộn mượt
         });
     };
+    // 
+    const userId: string = id
+    console.log(userId);
+
+    const handleAddToCart = () => {
+        if (product && userId) {
+            const data: any = {
+                productId: product._id,
+                name: product.name,
+                price: product.price,
+                image: product.image?.url,
+                quantity: quantity,
+            };
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Xóa sản phẩm
+                    addCart({ data, userId }).then(() => {
+                        Swal.fire(
+                            'Cart has been added successfully',
+                            'Your product has been added.',
+                            'success'
+                        )
+                    })
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // Hiển thị thông báo hủy xóa sản phẩm
+                    Swal.fire(
+                        'Cancelled',
+                        'Your product is safe :)',
+                        'error'
+                    )
+                }
+            })
+        }
+    };
+    if (isLoading) return <Skeleton />;
+    if (error) {
+        if ("data" in error && 'status' in error) {
+            <div>
+                {error.status}-{JSON.stringify(error.data)}
+            </div>
+        }
+    }
+
+
     return (
         <div className="container3">
             <section className="py-5">
@@ -90,7 +151,13 @@ const ProductDetail = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <Button className="buttonCart" icon={<BsCartPlus />} />
+                                <Button className="buttonCart" onClick={handleAddToCart}>
+                                    {resultAdd.isLoading ? (
+                                        <AiOutlineLoading3Quarters className="animate-spin m-auto" />
+                                    ) : (
+                                        <BsCartPlus className="bt" />
+                                    )}
+                                </Button>
                             </div>
                         </main>
                     </div>

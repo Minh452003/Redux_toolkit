@@ -9,7 +9,7 @@ const productApi = createApi({
         baseUrl: import.meta.env.VITE_API_URL,
         prepareHeaders: (headers) => {
             // Thêm logic xử lý headers ở đây nếu cần
-            const accessToken = JSON.parse(localStorage.getItem('accessToken') || '');
+            const accessToken = JSON.parse(localStorage.getItem('accessToken')!);
             if (accessToken) {
                 headers.set('Authorization', `Bearer ${accessToken}`);
             }

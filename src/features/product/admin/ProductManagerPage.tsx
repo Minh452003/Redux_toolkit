@@ -8,12 +8,10 @@ import Swal from "sweetalert2";
 import { useGetProductsQuery, useRemoveProductMutation } from "@/api/productApi";
 import { useGetCategoriesQuery } from "@/api/categoryApi";
 import { AiFillDelete } from "react-icons/ai";
-import { decoded } from "@/api/decoder";
 
 
 
 const ProductManagerPage = () => {
-    console.log(decoded);
 
     const { data: products, error, isLoading: isLoadingFetching } = useGetProductsQuery();
     const { data: categories } = useGetCategoriesQuery();

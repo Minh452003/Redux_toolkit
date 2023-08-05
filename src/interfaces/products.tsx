@@ -10,7 +10,7 @@ export interface IProduct {
     reQuantity?: number;
     categoryId?: string;
     _id?: string;
-    createdAt?: string;
+    createdAt?: any;
     updatedAt?: string;
 }
 export interface ProductResponse {

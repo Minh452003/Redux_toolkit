@@ -23,7 +23,7 @@ const Header = () => {
                     <span>
                         <input type="checkbox" className="check" />
                         <div className="items btn-camera">
-                            <Link style={{ color: 'white' }} to={'/signin'}><PiShoppingCartSimpleFill /></Link>
+                            <Link style={{ color: 'white' }} to={'/carts'}><PiShoppingCartSimpleFill /></Link>
                         </div>
                         <div className="items btn-image">
                             <Link style={{ color: 'white' }} to={'/signin'}><BiSolidUserCircle /></Link>

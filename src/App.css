@@ -832,3 +832,16 @@ blockquote {
   outline: none;
   transition: .3s ease;
 }
+
+.cart {
+  background: #eecda3;
+  background: -webkit-linear-gradient(to right, #eecda3, #ef629f);
+  background: linear-gradient(to right, #eecda3, #ef629f);
+  min-height: 100vh;
+}
+
+.spc1 {
+  float: left;
+  width: 70px !important;
+  height: 70px !important;
+}

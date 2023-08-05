@@ -12,6 +12,8 @@ import CategoryManagerPage from "./features/category/CategoryManagerPage";
 import AddCategory from "./features/category/AddCategory";
 import UpdateCategoryPage from "./features/category/UpdateCategoryPage";
 import ProductDetail from "./features/product/view/ProductDetail";
+import CartPage from "./features/cart/CartPage";
+import CartDetailPage from "./features/cart/CartDetailPage";
 
 export const router = createBrowserRouter([
     {
@@ -22,7 +24,10 @@ export const router = createBrowserRouter([
             { path: 'products', element: '' },
             { path: 'products/:id', element: <ProductDetail /> },
             { path: 'signin', element: <SignIn /> },
-            { path: 'signup', element: <SignUp /> }
+            { path: 'signup', element: <SignUp /> },
+            { path: 'carts', element: <CartPage /> },
+            { path: 'carts/pay', element: <CartDetailPage /> }
+
         ]
     },
     {

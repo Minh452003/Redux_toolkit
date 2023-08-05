@@ -1,5 +1,6 @@
 
 import userApi, { userReducer } from "@/api/authApi";
+import cartApi, { cartReducer } from "@/api/cartApi";
 import categoryApi, { categoryReducer } from "@/api/categoryApi";
 import commentApi, { commentReducer } from "@/api/commentApi";
 import productApi, { productReducer } from "@/api/productApi";
@@ -29,14 +30,16 @@ const rootReducer = combineReducers({
     categories: categoryReducer,
     uploads: uploadReducer,
     users: userReducer,
-    comments: commentReducer
+    comments: commentReducer,
+    carts: cartReducer
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 const additionalMiddlewares: any = [
     productApi.middleware,
     categoryApi.middleware,
     userApi.middleware,
-    commentApi.middleware
+    commentApi.middleware,
+    cartApi.middleware
 ];
 
 export const store = configureStore({

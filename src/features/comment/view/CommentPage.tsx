@@ -1,7 +1,7 @@
 import { useGetUserByIdQuery } from "@/api/authApi"
 import { useAddCommentMutation, useGetCommentsQuery } from "@/api/commentApi"
-import { decoded } from "@/api/decoder"
-import { Button, Form, Image, Pagination, message } from "antd"
+import { getDecodedAccessToken } from "@/api/decoder"
+import { Button, Form, Image, Pagination, Skeleton, message } from "antd"
 import TextArea from "antd/es/input/TextArea"
 import { AiOutlineLoading3Quarters, AiOutlinePlus } from "react-icons/ai"
 import { format } from "date-fns";
@@ -9,11 +9,12 @@ import { useState } from "react"
 
 
 const CommentPage = ({ productId }: any) => {
-    const { id } = decoded;
+    const decodedToken: any = getDecodedAccessToken();
+    const id = decodedToken ? decodedToken.id : null;
     const [form] = Form.useForm();
     const [messageApi, contextHolder] = message.useMessage();
     const { data: user } = useGetUserByIdQuery(id);
-    const { data: commentsData } = useGetCommentsQuery();
+    const { data: commentsData, isLoading, error } = useGetCommentsQuery();
     const [addComment, { isLoading: isAddingComment }] = useAddCommentMutation();
     const comments = commentsData?.comments.filter((comment: any) => comment.productId._id === productId)
 
@@ -46,18 +47,27 @@ const CommentPage = ({ productId }: any) => {
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+    if (isLoading) return <Skeleton />;
+    if (error) {
+        if ("data" in error && 'status' in error) {
+            <div>
+                {error.status}-{JSON.stringify(error.data)}
+            </div>
+        }
+    }
 
     return (
         <div>
             <div className="container">
                 <div className="row ">
                     <div className="comment-wrapper">
+                        {contextHolder}
                         <div className="panel panel-info">
                             <h5 className="card-title">Comments</h5>
                             <br />
-                            {contextHolder}
                             <div className="panel-body">
                                 <Form
+                                    form={form}
                                     layout="vertical"
                                     name="basic"
                                     labelCol={{ span: 8 }}
