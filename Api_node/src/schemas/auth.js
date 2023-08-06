@@ -22,6 +22,7 @@ export const userSchema = Joi.object({
         "any.required": "Trường confirm là bắt buộc",
     }),
     address: Joi.string(),
+    phone: Joi.string(),
     role: Joi.string(),
     image: Joi.object()
 

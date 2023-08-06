@@ -1,5 +1,6 @@
 
 import userApi, { userReducer } from "@/api/authApi";
+import billApi, { billReducer } from "@/api/billApi";
 import cartApi, { cartReducer } from "@/api/cartApi";
 import categoryApi, { categoryReducer } from "@/api/categoryApi";
 import commentApi, { commentReducer } from "@/api/commentApi";
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
     uploads: uploadReducer,
     users: userReducer,
     comments: commentReducer,
-    carts: cartReducer
+    carts: cartReducer,
+    bills: billReducer
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 const additionalMiddlewares: any = [
@@ -39,7 +41,8 @@ const additionalMiddlewares: any = [
     categoryApi.middleware,
     userApi.middleware,
     commentApi.middleware,
-    cartApi.middleware
+    cartApi.middleware,
+    billApi.middleware
 ];
 
 export const store = configureStore({

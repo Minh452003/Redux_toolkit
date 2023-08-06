@@ -1,17 +1,23 @@
+import { useGetCategoriesQuery } from "@/api/categoryApi";
+import { useGetProductsQuery } from "@/api/productApi";
+import { IProduct } from "@/interfaces/products";
+import { Button, Pagination, Skeleton } from "antd";
+import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
-import { useGetProductsQuery } from '@/api/productApi';
-import './product.css'
-import { useGetCategoriesQuery } from '@/api/categoryApi';
-import { IProduct } from '@/interfaces/products';
-import { Button, Pagination, Skeleton } from 'antd';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-const ProductView = () => {
+const CategoryDetail = () => {
+    const { id: paramsId }: any = useParams();
     const { data: products, error, isLoading: isLoadingFetching } = useGetProductsQuery();
     const { data: categories } = useGetCategoriesQuery();
+    const [activeCategory, setActiveCategory] = useState<string | null>(null);
+    const handleCategoryClick = (categoryId: any) => {
+        setActiveCategory(categoryId);
+        setCurrentPage(1); // Reset page when changing category
+    };
+    const newProducts = products?.docs.filter((item: IProduct) => item.categoryId == paramsId);
     // 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 8;
+    const itemsPerPage = 2;
     const handleChangePage = (page: number) => {
         setCurrentPage(page);
     };
@@ -45,9 +51,14 @@ const ProductView = () => {
                         <div className="col-lg-12">
                             <div className="special-menu text-center">
                                 <div className="button-group filter-button-group">
-                                    <button className="active" data-filter="*">All</button>
+                                    <button data-filter="*">
+                                        <Link to={`/`}>ALL</Link>
+                                    </button>
                                     {categories?.map((category) => (
-                                        <button key={category._id}>
+                                        <button
+                                            className={activeCategory === category._id ? "active" : ""}
+                                            onClick={() => handleCategoryClick(category._id)}
+                                            key={category._id}>
                                             <Link to={`/category/${category._id}`}> {category.name}</Link>
                                         </button>
                                     ))}
@@ -56,7 +67,7 @@ const ProductView = () => {
                         </div>
                     </div>
                     <div className="row special-list">
-                        {products?.docs?.slice(startIndex, endIndex).map((product: IProduct) => (
+                        {newProducts?.slice(startIndex, endIndex).map((product: IProduct) => (
                             <div className="col-lg-3 col-md-4 special-grid drinks" key={product._id}>
                                 <div className="gallery-single fix">
                                     <img src={product.image?.url} className="img-fluid img1" alt="Image" />
@@ -73,7 +84,7 @@ const ProductView = () => {
                     <Pagination
                         className='float-right'
                         current={currentPage}
-                        total={products?.docs?.length || 0}
+                        total={newProducts?.length || 0}
                         pageSize={itemsPerPage}
                         onChange={handleChangePage}
                     />
@@ -84,4 +95,4 @@ const ProductView = () => {
     )
 }
 
-export default ProductView
+export default CategoryDetail

@@ -1,37 +1,75 @@
 import { useGetUserByIdQuery } from '@/api/authApi';
-import { useGetCartsQuery } from '@/api/cartApi';
+import { useCreateBillMutation } from '@/api/billApi';
+import { useGetCartsQuery, useRemoveAllCartMutation } from '@/api/cartApi';
 import { getDecodedAccessToken } from '@/api/decoder';
-import { Form, Input, Skeleton } from 'antd';
+import { Button, Form, Input, Skeleton } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 const CartDetailPage = () => {
     const decodedToken: any = getDecodedAccessToken();
     const id = decodedToken ? decodedToken.id : null;
+    const navigate = useNavigate()
     const { data: carts, isLoading: cartsLoading, error: cartsError } = useGetCartsQuery(id);
     const { data: user, isSuccess: userSuccess } = useGetUserByIdQuery(id);
-
     const productsInCart = carts?.data.products;
-
+    const [createBill] = useCreateBillMutation();
+    const [removeAllCart] = useRemoveAllCartMutation()
+    // 
     const [form] = Form.useForm();
-
     const setFields = () => {
         form.setFieldsValue({
             id: user?._id,
             name: user?.name,
             address: user?.address,
+            phone: user?.phone
         });
     };
-
     useEffect(() => {
         if (userSuccess) {
             setFields();
         }
     }, [userSuccess]);
 
-    const onFinish = async (values: any) => {
-        // Xử lý khi hoàn thành form
-        console.log(values);
+    const onFinish = async ({ name, address, phone, notes, id }: any) => {
+        const cartDataWithoutId = { ...carts?.data };
+        delete cartDataWithoutId._id;
+        try {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    (async () => {
+                        await createBill({ ...cartDataWithoutId, name, address, phone, notes }).then(() => {
+                            Swal.fire(
+                                'Success!',
+                                'Your order has been success.',
+                                'success'
+                            )
+                        }).then(() => removeAllCart(id))
+                        navigate('/order')
+                    })()
 
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // Hiển thị thông báo hủy xóa sản phẩm
+                    Swal.fire(
+                        'Cancelled',
+                        'Your order is safe :)',
+                        'error'
+                    )
+                }
+            })
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -39,7 +77,6 @@ const CartDetailPage = () => {
     };
 
     if (cartsLoading) return <Skeleton />;
-
     if (cartsError) {
         if ("data" in cartsError && 'status' in cartsError) {
             return (
@@ -140,20 +177,24 @@ const CartDetailPage = () => {
                             >
                                 <TextArea rows={4} className="input1" />
                             </Form.Item>
-                        </Form>
-                        <br />
-                        <h4 className="mb-3">Hình thức thanh toán</h4>
+                            <br />
+                            <h4 className="mb-3">Hình thức thanh toán</h4>
 
-                        <div className="d-flex flex-column"> <label className="radio"> <input type="radio" name="gender"
-                            value="MALE" checked />
-                            <div className="d-flex justify-content-between"> <span>THANH TOÁN TẠI NHÀ</span></div>
-                        </label> <label className="radio"> <input type="radio" name="gender" value="FEMALE" />
-                                <div className="d-flex justify-content-between"> <span>THANH TOÁN ONLINE</span>
-                                </div>
-                            </label> </div>
-                        <br />
-                        <hr className="mb-4" />
-                        <button className="btn btn-primary btn-lg btn-block" type="submit" name="btnDatHang">Đặt hàng</button>
+                            <div className="d-flex flex-column"> <label className="radio"> <input type="radio" name="gender"
+                                value="MALE" checked />
+                                <div className="d-flex justify-content-between"> <span>CASH ON DELIVERY</span></div>
+                            </label> <label className="radio"> <input type="radio" name="gender" value="FEMALE" />
+                                    <div className="d-flex justify-content-between"> <span>ONLINE PAYMENT</span>
+                                    </div>
+                                </label> </div>
+                            <br />
+                            <hr className="mb-4" />
+                            <Form.Item >
+                                <Button danger type="primary" htmlType="submit" style={{ width: '100%', margin: 'auto', height: '35px', fontSize: '18px' }}>
+                                    Order
+                                </Button>
+                            </Form.Item>
+                        </Form>
                     </div>
                 </div>
             </div>

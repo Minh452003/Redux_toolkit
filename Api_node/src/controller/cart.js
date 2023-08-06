@@ -1,6 +1,7 @@
 import Cart from '../model/cart.js'
 import User from "../model/user.js";
-import { ProductSchema, productCart } from '../schemas/product.js'
+import { productCart } from '../schemas/product.js'
+import mongoose from 'mongoose'
 
 
 export const resetCart = async (idUser) => {
@@ -172,3 +173,26 @@ export const removeProduct = async (req, res) => {
         })
     }
 }
+
+export const clearUserCart = async (req, res) => {
+    try {
+        const userId = new mongoose.Types.ObjectId(req.params.id);
+        const cartExist = await Cart.findOne({ userId });
+
+        if (!cartExist) {
+            return res.status(404).json({ message: 'Không tìm thấy giỏ hàng cho người dùng này' });
+        }
+
+        cartExist.products = []; // Xoá tất cả sản phẩm trong giỏ hàng
+        cartExist.total = 0; // Đặt tổng giá trị về 0
+        const cartUpdated = await Cart.findOneAndUpdate({ _id: cartExist._id }, cartExist, { new: true });
+
+        return res.json({
+            message: 'Xoá tất cả sản phẩm trong giỏ hàng thành công',
+            data: cartUpdated,
+        });
+    } catch (error) {
+        console.error(error); // In ra thông tin lỗi cụ thể
+        return res.status(500).json({ message: 'Xoá tất cả sản phẩm trong giỏ hàng không thành công' });
+    }
+};

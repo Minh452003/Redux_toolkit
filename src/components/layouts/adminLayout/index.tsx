@@ -46,7 +46,7 @@ const AdminLayout = () => {
             <section id="sidebar" className={isSidebarHidden ? 'hide' : ''}>
                 <Link className="brand" to={'/'}>
                     <img src="https://i.pinimg.com/170x/6b/62/20/6b6220e809e48ee2226f725edfcbc957.jpg" className="img" alt="" />
-                    <span className="text">AdminBooK</span>
+                    <span className="text">Admin</span>
                 </Link>
                 <ul className="side-menu top">
                     <li className="active">

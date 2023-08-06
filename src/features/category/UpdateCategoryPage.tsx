@@ -48,6 +48,9 @@ const UpdateCategoryPage = () => {
     };
     return (
         <div>
+            <header className="flex items-center justify-between mb-4">
+                <h2 className="font-bold text-2xl">UPDATE CATEGORY</h2>
+            </header>
             <Form
                 form={form}
                 layout="vertical"

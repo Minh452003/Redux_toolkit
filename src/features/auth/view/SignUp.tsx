@@ -129,6 +129,14 @@ const SignUp = () => {
                             <Input className='input' />
                         </Form.Item>
                         <Form.Item
+                            label="Phone"
+                            name="phone"
+                            className='label'
+                            rules={[{ required: true, message: 'Phone cannot be empty' }]}
+                        >
+                            <Input className='input' />
+                        </Form.Item>
+                        <Form.Item
                             label="Avatar"
                             name="image"
                             className='label'

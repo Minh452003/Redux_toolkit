@@ -1,23 +1,27 @@
-import Status from '../model/status.js';
+import Status from "../model/status.js";
 
-// Get all statuses
-export const getAllStatuses = async (req, res) => {
+// API để lấy danh sách trạng thái
+export const getStatusList = async (req, res) => {
   try {
-    const statuses = await Status.find();
-    res.status(200).json(statuses);
+    const statusList = await Status.find();
+    res.status(200).json(statusList);
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ message: error.message });
   }
 };
-export const getStatusById = async (req, res) => {
+export const createStatus = async (req, res) => {
   try {
-    const { id } = req.params;
-    const status = await Status.findById(id);
-    if (!status) {
-      return res.status(404).json({ error: 'Status not found' });
-    }
-    res.status(200).json(status);
+    const { name, description } = req.body;
+    const newStatus = await Status.create({ name, description });
+
+    res.status(201).json({
+      message: 'Trạng thái đã được tạo thành công',
+      data: newStatus,
+    });
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(400).json({
+      message: 'Không thể tạo trạng thái',
+      error: error.message,
+    });
   }
 };

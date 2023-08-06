@@ -28,7 +28,7 @@ const SignIn = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
-            navigate("/admin");
+            navigate("/profile");
         }
     };
 

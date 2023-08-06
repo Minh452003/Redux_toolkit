@@ -85,6 +85,9 @@ const CategoryManagerPage = () => {
         }
     } return (
         <div>
+            <header className="flex items-center justify-between mb-4">
+                <h2 className="font-bold text-2xl">CATEGORY MANAGEMENT</h2>
+            </header>
             <Button type="primary" className="add1" danger ><Link className="add" to={'/admin/categories/add'}></Link></Button>
             <Table columns={columns} dataSource={data} pagination={{ defaultPageSize: 6 }} rowKey="key" />
         </div>

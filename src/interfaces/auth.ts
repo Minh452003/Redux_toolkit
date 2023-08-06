@@ -8,7 +8,8 @@ export interface IUser {
     confirmpassword?: string
     address?: string
     image?: IImage | any
-    role?: string
+    role?: string,
+    phone?: string
 }
 export interface IImage {
     url: string;

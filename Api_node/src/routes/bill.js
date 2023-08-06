@@ -1,10 +1,10 @@
-import { create, get, getAll, getByIdUser, update } from '../controller/bill.js'
-import { checkPermission } from '../middlewares/checkPermission.js';
 import express from 'express';
+import { createBill, getBillById, getBillsByUserId, removeBill } from '../controller/bill.js';
 
-const routerBill = express.Router();
-routerBill.route("/bill").get(getAll).post(create)
-routerBill.route("/bill/:id").get(get).patch(update)
-routerBill.get("/bill/user/:userId", getByIdUser)
+const router = express.Router();
 
-export default routerBill;
+router.post('/bills', createBill);
+router.get('/bills/:userId', getBillsByUserId);
+router.get('/bill/:billId', getBillById);
+router.patch('/cancel/:billId', removeBill);
+export default router;

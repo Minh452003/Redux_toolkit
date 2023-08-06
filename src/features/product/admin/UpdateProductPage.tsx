@@ -105,6 +105,9 @@ const UpdateProductPage = () => {
 
     return (
         <div>
+            <header className="flex items-center justify-between mb-4">
+                <h2 className="font-bold text-2xl">UPDATE PRODUCT</h2>
+            </header>
             {product?.image && (
                 <Image
                     src={product.image.url}

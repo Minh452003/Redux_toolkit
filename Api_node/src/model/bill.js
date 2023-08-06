@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
-const cartSchema = new mongoose.Schema(
+import mongoose from 'mongoose';
+
+const billSchema = mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true
+      ref: 'User',
+      required: true,
     },
     products: [
       {
@@ -13,45 +14,26 @@ const cartSchema = new mongoose.Schema(
         price: Number,
         image: String,
         quantity: Number,
-        userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
       },
-      }
     ],
-    name: {
-      type: String,
-      required: true
-    },
-    total: {
-      type: Number,
-    },
+    total: Number,
     status: {
       type: mongoose.Types.ObjectId,
-      ref: "Status",
-      default: "6488a17e098b67f90d85df71"
+      ref: 'Status',
+      default: '64cf5fa3ab6cc8580178e225'
     },
     address: {
       type: String,
-      required: true
+      required: true,
     },
     phone: {
       type: String,
-      required: true
+      required: true,
     },
-    notes: {
-      type: String,
-    },
-       quantity: {
-        type: Number,
-  
-    },
-    orderCancellation: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "OrderCancellation",
-    },
+    notes: String,
+    // other fields as needed
   },
   { timestamps: true, versionKey: false }
 );
 
-export default mongoose.model("Bill", cartSchema);
+export default mongoose.model('Bill', billSchema);

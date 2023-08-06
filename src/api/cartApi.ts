@@ -46,7 +46,14 @@ const cartApi = createApi({
                 body: data
             }),
             invalidatesTags: ['Cart']
-        })
+        }),
+        removeAllCart: builder.mutation<any, string | number>({
+            query: (userId) => ({
+                url: `/cart/clear/${userId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Cart']
+        }),
     })
 });
 
@@ -54,7 +61,8 @@ export const {
     useGetCartsQuery,
     useAddCartMutation,
     useRemoveProductInCartMutation,
-    useChangeQuantityMutation
+    useChangeQuantityMutation,
+    useRemoveAllCartMutation
 } = cartApi;
 export const cartReducer = cartApi.reducer;
 export default cartApi

@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import user from "../model/user.js";
 export const signUp = async (req, res) => {
     try {
-        const { name, email, password, address, image } = req.body;
+        const { name, email, password, address, phone, image } = req.body;
         const body = req.body;
         const { error } = userSchema.validate(body, { abortEarly: false });
         if (error) {
@@ -26,6 +26,7 @@ export const signUp = async (req, res) => {
             email,
             password: hashedPassword,
             address,
+            phone,
             image
         });
         data.password = undefined;
@@ -89,10 +90,10 @@ export const get = async (req, res) => {
                 message: "Hiện tt người dùng thất bại",
             })
         }
-        const { _id, name, email, address, role, image, formattedCreatedAt } = data;
+        const { _id, name, email, address, phone, role, image, formattedCreatedAt } = data;
 
         return res.status(200).json({
-            _id, name, email, address, role, image, formattedCreatedAt
+            _id, name, email, address, phone, role, image, formattedCreatedAt
         });
     } catch (error) {
         return res.status(400).json({
@@ -116,7 +117,7 @@ export const remove = async (req, res) => {
 export const update = async (req, res) => {
 
     try {
-        const { name, email, address, image, role } = req.body;
+        const { name, email, address, phone, image, role } = req.body;
         const id = req.params.id;
         const body = req.body;
         const { error } = userSchema.validate(body, { abortEarly: false });
@@ -131,7 +132,8 @@ export const update = async (req, res) => {
             email,
             address,
             role,
-            image
+            image,
+            phone
         }, {
             new: true,
         });

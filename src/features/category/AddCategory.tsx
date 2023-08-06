@@ -30,6 +30,9 @@ const AddCategory = () => {
     };
     return (
         <div>
+            <header className="flex items-center justify-between mb-4">
+                <h2 className="font-bold text-2xl">ADD CATEGORY</h2>
+            </header>
             <Form
                 layout="vertical"
                 name="basic"

@@ -1,93 +1,59 @@
 import Bill from '../model/bill.js';
-import { billSchema } from '../schemas/bill.js';
 
-export const getAll = async (req, res) => {
+export const createBill = async (req, res) => {
     try {
-        const data = await Bill.find().populate("products.userId status");
-        if (data.length === 0) {
-            return res.status(203).json({
-                message: "Không có đơn hàng nào",
-            });
-        }
-        return res.status(200).json(data);
+        const billData = req.body; // Get bill data from the request
+        // You might want to validate the billData before creating
+        const newBill = await Bill.create(billData);
 
+        return res.status(201).json({
+            message: 'Đặt hàng thành công',
+            data: newBill,
+        });
     } catch (error) {
         return res.status(400).json({
             message: error.message,
         });
     }
-}
-
-export const get = async (req, res) => {
+};
+export const getBillsByUserId = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const bills = await Bill.find({ userId }).populate('products.productId status');
+        return res.status(200).json(bills);
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message,
+        });
+    }
+};
+export const removeBill = async (req, res) => {
     try {
         const id = req.params.id;
-        const data = await Bill.findById(id).populate("products.userId status");
-        if (!data) {
-            return res.status(200).json({
-                message: "Không có đơn hàng"
-            });
-        }
-        return res.status(200).json(data);
-    } catch (error) {
-        return res.status(400).json({
-            message: error.message,
-        });
-    }
-}
-
-export const create = async (req, res) => {
-    try {
-        const body = req.body;
-        const { error } = billSchema.validate(body, { abortEarly: false });
-        if (error) {
-            return res.json({
-                message: error.details[0].message,
-            });
-        }
-        const data = await Bill.create(body);
-        if (!data) {
-            return res.status(200).json({
-                message: "Thêm đơn hàng thất bại"
-            });
-        }
+        const data = await Bill.findByIdAndDelete(id);
         return res.status(200).json({
-            message: "Thêm đơn hàng thành công",
-            data
-        });
+            message: "Xoá đơn hàng thành công",
+        })
     } catch (error) {
         return res.status(400).json({
-            message: error.message,
+            message: error,
         })
     }
-}
+};
+export const getBillById = async (req, res) => {
+    const billId = req.params.billId;
 
-export const update = async (req, res) => {
     try {
-        const id = req.params.id;
-        const body = req.body;
-        const data = await Bill.findOneAndUpdate({ _id: id }, body, { new: true });
-        if (!data) {
-            return res.status(200).json({
-                message: "Cập nhật thất bại"
+        const bill = await Bill.findById(billId).populate('products.productId status');
+        if (!bill) {
+            return res.status(404).json({
+                message: 'Đơn hàng không tồn tại'
             });
         }
-        return res.status(200).json({
-            message: "Cập nhật thành công",
-            data,
-        });
+        return res.status(200).json(bill);
     } catch (error) {
         return res.status(400).json({
-            message: error.message,
+            message: error.message
         });
     }
-}
-
-export const getByIdUser = async (req, res) => {
-    try {
-        const idUser = req.params.userId;
-        const orders = await Bill.find({ userId: idUser }).populate("products.userId status ");
-        return res.status(200).json(orders);
-    } catch (error) {
-        return res.status(400).json({ message: error.message });
-    }
-}
+};

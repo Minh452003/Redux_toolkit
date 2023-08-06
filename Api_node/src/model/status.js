@@ -1,11 +1,14 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const statusSchema = mongoose.Schema({
-status:{
-    type:String,
-    required:true,
-},
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    description: {
+        type: String
+    }
+});
 
-}, { timestamps: true, versionKey: false });
-
-export default mongoose.model("Status", statusSchema);
+export default mongoose.model('Status', statusSchema);
