@@ -18,6 +18,10 @@ import CategoryDetail from "./features/category/view/CategoryDetail";
 import UserProfile from "./features/auth/view/UserProfile";
 import OrderPage from "./features/order/OrderPage";
 import OrderDetailPage from "./features/order/OrderDetailPage";
+import OrderManagerPage from "./features/order/admin/OrderManagerPage";
+import OrderDetailManager from "./features/order/admin/OrderDetailManager";
+import UserManagerPage from "./features/auth/admin/UserManagerPage";
+import CommentManagerPage from "./features/comment/admin/CommentManagerPage";
 
 export const router = createBrowserRouter([
     {
@@ -46,16 +50,32 @@ export const router = createBrowserRouter([
             { path: 'dashboard', element: <DashBoard /> },
             {
                 path: 'products', children: [
-                    { index: true, element: <ProductManagerPage /> }, // Redirect to add page by default
+                    { index: true, element: <ProductManagerPage /> },
                     { path: 'add', element: <AddProductPage /> },
                     { path: ':id/update', element: <UpdateProductPage /> },
                 ],
             },
             {
                 path: 'categories', children: [
-                    { index: true, element: <CategoryManagerPage /> }, // Redirect to add page by default
+                    { index: true, element: <CategoryManagerPage /> },
                     { path: 'add', element: <AddCategory /> },
                     { path: ':id/update', element: <UpdateCategoryPage /> },
+                ]
+            },
+            {
+                path: 'orders', children: [
+                    { index: true, element: <OrderManagerPage /> },
+                    { path: ':id/detail', element: <OrderDetailManager /> },
+                ]
+            },
+            {
+                path: 'users', children: [
+                    { index: true, element: <UserManagerPage /> },
+                ]
+            },
+            {
+                path: 'comments', children: [
+                    { index: true, element: <CommentManagerPage /> },
                 ]
             }
         ]

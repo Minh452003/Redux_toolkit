@@ -228,7 +228,6 @@ a:hover {
 }
 
 .bg-f {
-    background-image: url("../images/footer-bg.jpg");
     background-attachment: scroll;
     background-clip: initial;
     background-color: rgba(0, 0, 0, 0);

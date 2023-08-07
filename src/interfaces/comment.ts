@@ -4,6 +4,6 @@ export interface IComment {
     userId?: any,
     productId?: any,
     description?: string,
-    createdAt?: string,
+    createdAt?: any,
     updatedAt?: string
 }

@@ -18,6 +18,10 @@ const billApi = createApi({
 
     }),
     endpoints: (builder) => ({
+        getBills: builder.query<IBill[], void>({
+            query: () => `/bills`,
+            providesTags: ['Bill']
+        }),
         getBillsByUser: builder.query<IBill[], void>({
             query: (userId) => `/bills/${userId}`,
             providesTags: ['Bill']
@@ -36,10 +40,18 @@ const billApi = createApi({
             invalidatesTags: ['Bill']
         }),
         removeBill: builder.mutation<IBill, string | number>({
-            query: (billId) => ({
-                url: `/cancel/${billId}`,
+            query: (id) => ({
+                url: `/bills/${id}`,
                 method: 'DELETE',
-                body: billId
+                body: id
+            }),
+            invalidatesTags: ['Bill']
+        }),
+        updateStatus: builder.mutation({
+            query: (order) => ({
+                url: `/bills/${order.id}`,
+                method: 'PATCH',
+                body: order
             }),
             invalidatesTags: ['Bill']
         }),
@@ -50,7 +62,9 @@ export const {
     useGetBillsByUserQuery,
     useGetBillByIdQuery,
     useCreateBillMutation,
-    useRemoveBillMutation
+    useRemoveBillMutation,
+    useGetBillsQuery,
+    useUpdateStatusMutation
 } = billApi;
 export const billReducer = billApi.reducer;
 export default billApi

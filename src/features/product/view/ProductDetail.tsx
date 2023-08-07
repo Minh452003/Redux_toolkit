@@ -3,7 +3,7 @@ import { getDecodedAccessToken } from "@/api/decoder";
 import { useGetProductByIdQuery, useGetProductsQuery } from "@/api/productApi";
 import CommentPage from "@/features/comment/view/CommentPage";
 import { IProduct } from "@/interfaces/products";
-import { Button, Image, Skeleton } from "antd";
+import { Button, Image, Skeleton, Tooltip } from "antd";
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BsCartPlus, BsStar, BsStarHalf } from "react-icons/bs";
@@ -36,8 +36,6 @@ const ProductDetail = () => {
     };
     // 
     const userId: string = id
-    console.log(userId);
-
     const handleAddToCart = () => {
         if (product && userId) {
             const data: any = {
@@ -151,13 +149,16 @@ const ProductDetail = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <Button className="buttonCart" onClick={handleAddToCart}>
-                                    {resultAdd.isLoading ? (
-                                        <AiOutlineLoading3Quarters className="animate-spin m-auto" />
-                                    ) : (
-                                        <BsCartPlus className="bt" />
-                                    )}
-                                </Button>
+                                <Tooltip title={id ? '' : 'You are not logged in!'}>
+                                    <Button className="buttonCart" onClick={handleAddToCart}>
+                                        {resultAdd.isLoading ? (
+                                            <AiOutlineLoading3Quarters className="animate-spin m-auto" />
+                                        ) : (
+                                            <BsCartPlus className="bt" />
+                                        )}
+                                    </Button>
+                                </Tooltip>
+
                             </div>
                         </main>
                     </div>
@@ -178,7 +179,7 @@ const ProductDetail = () => {
                                 <div className="card">
                                     <div className="card-body">
                                         <h5 className="card-title">Similar items</h5>
-                                        {similarProducts?.map((product) => (
+                                        {similarProducts?.map((product: any) => (
                                             <div className="d-flex mb-3" key={product._id}>
                                                 <a href="#" className="me-3">
                                                     <Image className="img-md img-thumbnail" style={{ width: '96px', height: '96px', objectFit: 'cover' }} src={product?.image?.url} />

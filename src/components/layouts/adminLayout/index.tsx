@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import './index.css';
 import { BsFillHouseDashFill } from 'react-icons/bs';
 import { TbBrandProducthunt } from 'react-icons/tb';
@@ -7,8 +7,11 @@ import { MdCategory } from 'react-icons/md';
 import { FaBlogger } from 'react-icons/fa';
 import { AiFillMessage, AiOutlineComment, AiOutlineMenu, AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
 import { RiLogoutCircleLine } from 'react-icons/ri';
+import PrivateRoute from '@/PrivateRouter';
 
 const AdminLayout = () => {
+    PrivateRoute();
+    const navigate = useNavigate();
     const [isSidebarHidden, setSidebarHidden] = useState<boolean>(false);
 
     const toggleSidebar = () => {
@@ -40,7 +43,10 @@ const AdminLayout = () => {
             })
         });
     }, [])
-
+    const onHandleOut = () => {
+        localStorage.removeItem("accessToken")
+        navigate('/')
+    }
     return (
         <div>
             <section id="sidebar" className={isSidebarHidden ? 'hide' : ''}>
@@ -68,25 +74,19 @@ const AdminLayout = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="blogs" className="a">
-                            <FaBlogger />
-                            <span className="text1">Blog</span>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="user" className="a">
+                        <Link to={'users'} className="a">
                             <AiOutlineUser />
                             <span className="text1">Users</span>
                         </Link>
                     </li>
                     <li>
-                        <Link to="comments" className="a">
+                        <Link to={'comments'} className="a">
                             <AiOutlineComment />
                             <span className="text1">Comments</span>
                         </Link>
                     </li>
                     <li>
-                        <Link to="bill" className="a">
+                        <Link to={'orders'} className="a">
                             <AiOutlineShoppingCart />
                             <span className="text1">Carts</span>
                         </Link>
@@ -96,7 +96,7 @@ const AdminLayout = () => {
                     <li>
                         <Link to="#" className="logout">
                             <RiLogoutCircleLine />
-                            <span className="text1">Logout</span>
+                            <span className="text1" onClick={() => onHandleOut()}>Logout</span>
                         </Link>
                     </li>
                 </ul>

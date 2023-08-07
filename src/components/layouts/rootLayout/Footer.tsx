@@ -44,8 +44,7 @@ const Footer = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12">
-                            <p className="company-name">All Rights Reserved. &copy; 2018 <a href="#">Yamifood Restaurant</a> Design By :
-                                <a href="https://html.design/">html design</a></p>
+                            <p className="company-name">All Rights Reserved. &copy; 2023 <a href="#">FPT TinEnvy Mall</a> </p>
                         </div>
                     </div>
                 </div>

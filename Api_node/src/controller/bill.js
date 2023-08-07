@@ -34,7 +34,7 @@ export const removeBill = async (req, res) => {
 
         if (!deletedBill) {
             return res.status(404).json({
-                message: "Hóa đơn không tồn tại",
+                message: "Hóa đơn không tồn tại" + deletedBill,
 
             });
         }
@@ -63,6 +63,43 @@ export const getBillById = async (req, res) => {
     } catch (error) {
         return res.status(400).json({
             message: error.message
+        });
+    }
+};
+export const getAllBills = async (req, res) => {
+    try {
+        const bills = await Bill.find().populate('products.productId status');
+        return res.status(200).json(bills);
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message,
+        });
+    }
+};
+export const updateBillStatus = async (req, res) => {
+    const id = req.params.id;
+    const { statusId } = req.body;
+
+    try {
+        const updatedBill = await Bill.findByIdAndUpdate(
+            id,
+            { status: statusId },
+            { new: true }
+        ).populate('products.productId status');
+
+        if (!updatedBill) {
+            return res.status(404).json({
+                message: 'Đơn hàng không tồn tại',
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Cập nhật trạng thái đơn hàng thành công',
+            data: updatedBill,
+        });
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message,
         });
     }
 };

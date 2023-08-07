@@ -1,14 +1,55 @@
-import { useGetBillByIdQuery, useRemoveBillMutation } from "@/api/billApi"
-import { Button, Image } from "antd";
+import { useGetBillByIdQuery, useRemoveBillMutation, useUpdateStatusMutation } from "@/api/billApi"
 import { useNavigate, useParams } from "react-router-dom"
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiOutlineLoading3Quarters, AiOutlinePlus } from "react-icons/ai";
 import Swal from "sweetalert2";
+import { Button, Form, Image, Input, Select } from 'antd';
+import { useGetStatusQuery } from "@/api/statusApi";
+import { useEffect } from "react";
 
-const OrderDetailPage = () => {
+const OrderDetailManager = () => {
     const { id }: any = useParams()
     const { data: orderDetail } = useGetBillByIdQuery(id);
     const [removeBill] = useRemoveBillMutation();
     const navigate = useNavigate();
+    const [updateStatus, { isLoading: isAddingStatus }] = useUpdateStatusMutation();
+    const { data: status } = useGetStatusQuery()
+
+    useEffect(() => {
+        if (orderDetail) {
+            setFields();
+        }
+    }, [orderDetail]);
+    const [form] = Form.useForm();
+    const setFields = () => {
+        form.setFieldsValue({
+            id: orderDetail?._id,
+            statusId: orderDetail?.status?._id,
+        });
+    };
+    const onFinish = async (values: any) => {
+        try {
+            updateStatus(values).then(() => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Status has been added successfully!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate("/admin/orders");
+            })
+
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+
+    };
+
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
+
+
     const deleteBill = (id: any) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -28,7 +69,7 @@ const OrderDetailPage = () => {
                         'Your file has been deleted.',
                         'success'
                     )
-                    navigate('/order');
+                    navigate('/admin/orders');
                 })
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 // Hiển thị thông báo hủy xóa sản phẩm
@@ -40,7 +81,6 @@ const OrderDetailPage = () => {
             }
         })
     }
-
     return (
         <div>
             <section className="h-100 gradient-custom">
@@ -49,13 +89,48 @@ const OrderDetailPage = () => {
                         <div className="col-lg-10 col-xl-8">
                             <div className="card" style={{ borderRadius: '10px' }}>
                                 <div className="card-header px-4 py-5">
-                                    <h5 className="text-muted mb-0">Thanks for your Order <span style={{ color: '#a8729a' }}></span>!</h5>
+                                    <h5 className="text-muted mb-0">Order details <span style={{ color: '#a8729a' }}></span>!</h5>
                                 </div>
                                 <div className="card-body p-4">
-                                    <div className="d-flex justify-content-between align-items-center mb-4">
-                                        <p className="lead fw-normal mb-0" style={{ color: '#a8729a' }} >Receipt</p>
-                                        <p className="small text-primary fw-bold mb-0">{orderDetail?.status?.name}</p>
-                                    </div>
+
+                                    <Form
+                                        form={form}
+                                        layout="vertical"
+                                        name="basic"
+                                        labelCol={{ span: 8 }}
+                                        initialValues={{ remember: true }}
+                                        onFinish={onFinish}
+                                        onFinishFailed={onFinishFailed}
+                                        autoComplete="off"
+                                    >
+                                        <Form.Item label="" name="id" style={{ display: 'none' }}>
+                                            <Input />
+                                        </Form.Item>
+                                        <Form.Item
+                                            className="small text-primary fw-bold mb-0 float-left"
+                                            name="statusId"
+                                            rules={[{ required: true, message: 'Danh mục không được để trống!' }]}
+                                        >
+                                            <Select className="input1">
+                                                {status?.map((stt: any) => {
+                                                    return (
+                                                        <Select.Option key={stt?._id} value={stt._id} className="text-primary">
+                                                            {stt.name}
+                                                        </Select.Option>
+                                                    );
+                                                })}
+                                            </Select>
+                                        </Form.Item>
+                                        <Form.Item >
+                                            <Button className="btnComent" htmlType="submit">
+                                                {isAddingStatus ? (
+                                                    <AiOutlineLoading3Quarters className="animate-spin" />
+                                                ) : (
+                                                    <AiOutlinePlus />
+                                                )}
+                                            </Button>
+                                        </Form.Item>
+                                    </Form>
                                     {orderDetail?.products.map((order: any) => (
                                         <div className="card shadow-0 border mb-4" key={order._id}>
                                             <div className="card-body">
@@ -110,9 +185,9 @@ const OrderDetailPage = () => {
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     )
 }
 
-export default OrderDetailPage
+export default OrderDetailManager

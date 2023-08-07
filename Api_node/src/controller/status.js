@@ -25,3 +25,30 @@ export const createStatus = async (req, res) => {
     });
   }
 };
+export const updateStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const body = req.body;
+    const data = await Status.findByIdAndUpdate({ _id: id }, body, {
+      new: true,
+    });
+    if (!data) {
+      return res.status(404).json({
+        message: 'Trạng thái không tồn tại',
+      });
+    }
+    if (data.length === 0) {
+      return res.status(400).json({
+        message: "Cập nhật trạng thái thất bại",
+      })
+    }
+    return res.status(200).json({
+      message: "Cập nhật trạng thái thành công",
+      data,
+    })
+  } catch (error) {
+    return res.status(400).json({
+      message: error,
+    })
+  }
+}

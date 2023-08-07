@@ -3,16 +3,22 @@ import { getDecodedAccessToken } from "@/api/decoder";
 import { FaSignInAlt } from "react-icons/fa";
 import { TbBrandProducthunt } from "react-icons/tb";
 import { FiUserPlus } from "react-icons/fi";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { BsCartCheckFill } from "react-icons/bs";
 import { Skeleton } from "antd";
 import { GrUserAdmin } from "react-icons/gr";
+import { BiLogOut } from "react-icons/bi";
 
 
 const UserProfile = () => {
     const decodedToken: any = getDecodedAccessToken();
     const id = decodedToken ? decodedToken.id : null;
+    const navigate = useNavigate();
     const { data: user, isLoading: userSuccess } = useGetUserByIdQuery(id);
+    const onHandleOut = () => {
+        localStorage.removeItem("accessToken")
+        navigate('/')
+    }
     if (userSuccess) return <Skeleton />;
     return (
         <div>
@@ -50,6 +56,12 @@ const UserProfile = () => {
                                     <Link to={'signup'} className="a ">
                                         <FiUserPlus className="float-left mt-2" />
                                         <span className="text1">Sign Up</span>
+                                    </Link>
+                                </li>
+                                <li className="list-group-item">
+                                    <Link to={'signup'} className="a ">
+                                        <BiLogOut className="text-danger float-left mt-2" />
+                                        <span className="text1 text-danger" onClick={() => onHandleOut()}>LogOut</span>
                                     </Link>
                                 </li>
                                 {user && user?.role === 'admin' && (

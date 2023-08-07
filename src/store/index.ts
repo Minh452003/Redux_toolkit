@@ -5,6 +5,7 @@ import cartApi, { cartReducer } from "@/api/cartApi";
 import categoryApi, { categoryReducer } from "@/api/categoryApi";
 import commentApi, { commentReducer } from "@/api/commentApi";
 import productApi, { productReducer } from "@/api/productApi";
+import statusApi, { statusReducer } from "@/api/statusApi";
 import { uploadReducer } from "@/features/upload/uploadSlice";
 import { Action, ThunkAction, combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
@@ -33,7 +34,8 @@ const rootReducer = combineReducers({
     users: userReducer,
     comments: commentReducer,
     carts: cartReducer,
-    bills: billReducer
+    bills: billReducer,
+    status: statusReducer
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 const additionalMiddlewares: any = [
@@ -42,7 +44,8 @@ const additionalMiddlewares: any = [
     userApi.middleware,
     commentApi.middleware,
     cartApi.middleware,
-    billApi.middleware
+    billApi.middleware,
+    statusApi.middleware
 ];
 
 export const store = configureStore({
