@@ -53,7 +53,7 @@ const UserProfile = () => {
                                     </Link>
                                 </li>
                                 <li className="list-group-item">
-                                    <Link to={'signup'} className="a ">
+                                    <Link to={'/signup'} className="a ">
                                         <FiUserPlus className="float-left mt-2" />
                                         <span className="text1">Sign Up</span>
                                     </Link>
