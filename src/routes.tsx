@@ -17,6 +17,7 @@ import CartDetailPage from "./features/cart/CartDetailPage";
 import CategoryDetail from "./features/category/view/CategoryDetail";
 import UserProfile from "./features/auth/view/UserProfile";
 import OrderPage from "./features/order/OrderPage";
+import OrderDetailPage from "./features/order/OrderDetailPage";
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
             { path: 'category/:id', element: <CategoryDetail /> },
             { path: 'profile', element: <UserProfile /> },
             { path: 'order', element: <OrderPage /> },
+            { path: 'order/:id', element: <OrderDetailPage /> },
 
         ]
     },

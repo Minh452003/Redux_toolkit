@@ -119,7 +119,7 @@ const CartDetailPage = () => {
                                     <div>
                                         <img src={cart.image} className="ima" width="50" />
                                         <h6 className="my-0">{cart.name}</h6>
-                                        <small className="text-muted">${cart.price * cart.quantity}.00</small>
+                                        <small className="text-muted">${cart.price * cart.quantity}</small>
                                     </div>
                                     <span className="text-muted">{cart?.quantity}</span>
                                 </li>
@@ -127,7 +127,7 @@ const CartDetailPage = () => {
 
                             <li className="list-group-item d-flex justify-content-between">
                                 <span>Total</span>
-                                <strong>${carts.data.total + 15}.00</strong>
+                                <strong>${carts.data.total + 15}</strong>
                             </li>
                         </ul>
                     </div>

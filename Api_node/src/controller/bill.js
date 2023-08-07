@@ -30,16 +30,25 @@ export const getBillsByUserId = async (req, res) => {
 export const removeBill = async (req, res) => {
     try {
         const id = req.params.id;
-        const data = await Bill.findByIdAndDelete(id);
+        const deletedBill = await Bill.findByIdAndDelete(id);
+
+        if (!deletedBill) {
+            return res.status(404).json({
+                message: "Hóa đơn không tồn tại",
+
+            });
+        }
+
         return res.status(200).json({
             message: "Xoá đơn hàng thành công",
-        })
+        });
     } catch (error) {
         return res.status(400).json({
-            message: error,
-        })
+            message: error.message,
+        });
     }
 };
+
 export const getBillById = async (req, res) => {
     const billId = req.params.billId;
 

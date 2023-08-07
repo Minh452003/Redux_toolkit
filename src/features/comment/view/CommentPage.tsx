@@ -16,7 +16,7 @@ const CommentPage = ({ productId }: any) => {
     const { data: user } = useGetUserByIdQuery(id);
     const { data: commentsData, isLoading, error } = useGetCommentsQuery();
     const [addComment, { isLoading: isAddingComment }] = useAddCommentMutation();
-    const comments = commentsData?.comments.filter((comment: any) => comment.productId._id === productId)
+    const comments = commentsData?.comments.filter((comment: any) => comment.productId && comment.productId._id === productId)
 
     const onFinish = async (values: any) => {
         await addComment({

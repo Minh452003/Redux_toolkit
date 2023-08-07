@@ -6,5 +6,5 @@ const router = express.Router();
 router.post('/bills', createBill);
 router.get('/bills/:userId', getBillsByUserId);
 router.get('/bill/:billId', getBillById);
-router.patch('/cancel/:billId', removeBill);
+router.delete('/cancel/:billId', removeBill);
 export default router;

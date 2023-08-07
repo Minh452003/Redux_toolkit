@@ -67,7 +67,7 @@ const OrderPage = () => {
             key: 'action',
             render: (_, record: any) => (
                 <Space size="middle">
-                    <Button danger style={{ border: '1px solid blue' }}><Link to={`/bill/${record.key}`}> <CgDetailsMore className='text-danger' /></Link></Button>
+                    <Button danger style={{ border: '1px solid blue' }}><Link to={`/order/${record.key}`}> <CgDetailsMore className='text-danger' /></Link></Button>
                 </Space>
             ),
         },

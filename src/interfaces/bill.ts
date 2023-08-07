@@ -2,7 +2,7 @@ export interface Product {
     productId: string;
     name: string;
     price: number;
-    image: object;
+    image: any;
     quantity: number;
 }
 
@@ -11,7 +11,7 @@ export interface IBill {
     userId: string;
     products: Product[];
     total: number;
-    status: string;
+    status: any;
     address: string;
     phone: string;
     notes: string;

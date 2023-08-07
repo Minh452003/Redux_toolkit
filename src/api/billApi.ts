@@ -39,6 +39,7 @@ const billApi = createApi({
             query: (billId) => ({
                 url: `/cancel/${billId}`,
                 method: 'DELETE',
+                body: billId
             }),
             invalidatesTags: ['Bill']
         }),
