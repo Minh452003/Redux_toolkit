@@ -4,7 +4,6 @@ import './index.css';
 import { BsFillHouseDashFill } from 'react-icons/bs';
 import { TbBrandProducthunt } from 'react-icons/tb';
 import { MdCategory } from 'react-icons/md';
-import { FaBlogger } from 'react-icons/fa';
 import { AiFillMessage, AiOutlineComment, AiOutlineMenu, AiOutlineShoppingCart, AiOutlineUser } from 'react-icons/ai';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import PrivateRoute from '@/PrivateRouter';

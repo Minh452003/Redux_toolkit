@@ -1,4 +1,4 @@
-import { IProduct, ProductResponse } from '@/interfaces/products';
+import { IProduct } from '@/interfaces/products';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 
