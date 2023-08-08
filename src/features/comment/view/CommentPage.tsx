@@ -6,8 +6,6 @@ import TextArea from "antd/es/input/TextArea"
 import { AiOutlineLoading3Quarters, AiOutlinePlus } from "react-icons/ai"
 import { format } from "date-fns";
 import { useState } from "react"
-import { Tooltip } from 'antd';
-
 
 const CommentPage = ({ productId }: any) => {
     const decodedToken: any = getDecodedAccessToken();
@@ -81,9 +79,7 @@ const CommentPage = ({ productId }: any) => {
                                         name="description"
                                         rules={[{ required: true, message: 'Please input your comment!' }]}
                                     >
-                                        <Tooltip title={user ? '' : 'You are not logged in!'}>
-                                            <TextArea rows={3} className="input1" disabled={!user} />
-                                        </Tooltip>
+                                        <TextArea rows={3} className="input1" disabled={!user} />
                                     </Form.Item>
                                     <Form.Item >
                                         <Button className="btnComent" htmlType="submit">
